@@ -19,50 +19,139 @@ class Database
 			mysql_close($this->conn);
 	}
 	
+	function genaricGet($table, $id)
+	{
+		if ( ($id = intval($id)) == 0 )
+			return false;
+		$result = mysql_query("SELECT * FROM `".$table."` WHERE `id` = ".$id);
+		return mysql_fetch_array($result, MYSQL_ASSOC);
+	}
+	
+	function genaricGetSet($table)
+	{
+		$result = mysql_query("SELECT * FROM ".$table);
+		$output = array();
+		while ( $d = mysql_fetch_array($result, MYSQL_ASSOC) )
+		{
+			if ( !empty($d) )
+				$output[] = $d;
+		}
+		return $output;
+	}
+	
+	function genaricRemove($table, $id)
+	{
+		if ( ($id = intval($id)) == 0 )
+			return false;
+		mysql_query("DELETE FROM `".$table."` WHERE `id` = ".$id);
+	}
+	
+	
+	
 	function addCareer($name, $location, $limit)
 	{
-		
+		$name = mysql_real_escape_string($name);
+		$location = mysql_real_escape_string($location);
+		if ( ($limit = intval($limit)) == 0 )
+			return false;
+			
+		return mysql_query("INSERT INTO `careers` (name, location, maxStudents) VALUES('".$name."', '".$location."', ".$limit.")");
 	}
 	
 	function getCareer($id)
 	{
-		
+		return $this->genaricGet("careers", $id);
 	}
 	
 	function getCareers()
 	{
-		
+		return $this->genaricGetSet("careers");
+	}
+	
+	function removeCareer($id)
+	{
+		return $this->genaricRemove("careers", $id);
 	}
 	
 	function setStudentChoices($id, $c1, $c2, $c3, $c4)
 	{
-		
+		if ( ($id = intval($id)) == 0 )
+			return false;
+			
+		if ( ($c1 = intval($c1)) == 0 )
+			return false;
+		if ( ($c2 = intval($c2)) == 0 )
+			return false;
+		if ( ($c3 = intval($c3)) == 0 )
+			return false;
+		if ( ($c4 = intval($c4)) == 0 )
+			return false;
+			
+		return mysql_query("INSERT INTO `selections` (id, c1,c2,c3,c4) VALUES (".$id.", ".$c1.", ".$c2.", ".$c3.", ".$c4.")");	
 	}
 	
 	function getStudentChoices($id)
 	{
-		
+		return $this->genaricGet("selections", $id);
 	}
 	
 	function clearStudentChoices($id)
 	{
-		
+		return $this->genaricRemove("selections", $id);
 	}
 	
 	function setStudentPlacement($id, $p1, $p2, $p3, $p3)
 	{
-		
+		if ( ($id = intval($id)) == 0 )
+			return false;
+			
+		if ( ($p1 = intval($p1)) == 0 )
+			return false;
+		if ( ($p2 = intval($p2)) == 0 )
+			return false;
+		if ( ($p3 = intval($p3)) == 0 )
+			return false;
+		if ( ($p4 = intval($p4)) == 0 )
+			return false;
+			
+		return mysql_query("INSERT INTO `placements` (id, p1,p2,p3,p4) VALUES (".$id.", ".$p1.", ".$p2.", ".$p3.", ".$p4.")");	
 	}
 	
 	function getStudentPlacement($id)
 	{
-		
+		return $this->genaricGet("placements", $id);
 	}
 	
 	function clearStudentPlacement($id)
 	{
-		
+		return $this->genaricGet("placements", $id);
 	}
+	
+	function addStudent($id, $first, $last, $grade, $homeroom)
+	{
+		if ( ($id = intval($id)) == 0 )
+			return false;
+		if ( ($grade = intval($grade)) == 0 )
+			return false;
+		if ( ($homeroom = intval($homeroom)) == 0 )
+			return false;
+			
+		$first = mysql_real_escape_string($first);
+		$last = mysql_real_escape_string($last);
+		
+		return mysql_query("INSERT INTO `students` (id, first, last, grade, homeroom) VALUES(".$id.", '".$first."', '".$last."', ".$grade.", ".$homeroom.")");
+	}
+	
+	function getStudent($id)
+	{
+		return $this->genaricGet("students", $id);
+	}
+	
+	function removeStudent($id)
+	{
+		return $this->genaricRemove("students", $id);
+	}
+	
 	
 	
 }
