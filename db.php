@@ -88,7 +88,17 @@ class Database
 		if ( ($c4 = intval($c4)) == 0 )
 			return false;
 			
-		return mysql_query("INSERT INTO `selections` (id, c1,c2,c3,c4) VALUES (".$id.", ".$c1.", ".$c2.", ".$c3.", ".$c4.")");	
+		$data = array($c1, $c2, $c3, $c4);
+		foreach ( $data as $ak => $a )
+		{
+			foreach ( $data as $bk => $b )
+			{
+				if ( $ak != $bk && $a == $b )
+					return false;
+			}
+		}
+			
+		return mysql_query("INSERT INTO `selections` (id, s1,s2,s3,s4) VALUES (".$id.", ".$c1.", ".$c2.", ".$c3.", ".$c4.")");	
 	}
 	
 	function getStudentChoices($id)
@@ -140,6 +150,9 @@ class Database
 		$first = mysql_real_escape_string($first);
 		$last = mysql_real_escape_string($last);
 		
+		if ( empty($first) || empty($last) )
+			return false;
+		
 		return mysql_query("INSERT INTO `students` (id, first, last, grade, homeroom) VALUES(".$id.", '".$first."', '".$last."', ".$grade.", ".$homeroom.")");
 	}
 	
@@ -148,12 +161,26 @@ class Database
 		return $this->genaricGet("students", $id);
 	}
 	
+	function getStudents()
+	{
+		return $this->genaricGetSet("students");
+	}
+	
 	function removeStudent($id)
 	{
 		return $this->genaricRemove("students", $id);
 	}
 	
-	
+	function resetStudent($id)
+	{
+		if ( ($id = intval($id)) == 0 )
+			return false;
+		
+		$this->removeStudent($_POST['id']);
+		$this->clearStudentChoices($_POST['id']);
+		$this->clearStudentPlacement($_POST['id']);
+		return true;
+	}
 	
 }
 
