@@ -3,6 +3,7 @@ require_once "config.php";
 
 class Database
 {
+	private $conn;
 	function __construct()
 	{
 		global $databaseInfo;
@@ -16,7 +17,7 @@ class Database
 	function __destruct()
 	{
 		if ( $this->conn )
-			mysql_close($this->conn);
+			@mysql_close($this->conn);
 	}
 	
 	function genaricGet($table, $id)
