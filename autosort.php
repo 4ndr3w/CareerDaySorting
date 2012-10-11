@@ -19,6 +19,11 @@ class Placement
 			return false;
 		return true;
 	}
+	
+	function isStatic()
+	{
+		return $this->isStatic;
+	}
 }
 
 class Choice
@@ -40,6 +45,7 @@ class Choice
 	}
 }
 
+
 class Student
 {
 	function __construct($id, $grade, $c1, $c2, $c3, $c4)
@@ -52,9 +58,9 @@ class Student
 		$this->choices[2] = new Choice($c3, 2);
 		$this->choices[3] = new Choice($c4, 1);	
 		$this->placements = array();
-		$this->placements[0] = new Placement(-1, -1);
-		$this->placements[1] = new Placement(-1, -1);
-		$this->placements[2] = new Placement(-1, -1);
+		$this->placements[0] = new Placement(0, -1);
+		$this->placements[1] = new Placement(0, -1);
+		$this->placements[2] = new Placement(0, -1);
 	}
 	
 	function assignBlock($blockNum, $placement)
@@ -166,28 +172,103 @@ for ( $i = 0; $i < 4; $i++ )
 		{
 			if ( $student->grade == $currentSortingGrade )
 			{
-				echo "Sorting student ".$student->id." - Choice ".$i." - in grade ".$currentSortingGrade."\n";
+				//echo "Sorting student ".$student->id." - Choice ".$i." - in grade ".$currentSortingGrade."\n";
 				
-				for ( $b = 0; $b < 3; $b++ )
+				$skip = false;
+				$blocksFilled = 0;
+				for ( $z = 0; $z < 3; $z++ )
 				{
-					$highestChoiceNumber = $student->getHighestChoiceNumber();
-					if ( $highestChoiceNumber != -1 )
-					{
+					if ( !$student->blockIsOpen($z) )
+						$blocksFilled++;
+				}
+				$skip = ($blocksFilled==3);
+				$highestChoiceNumber = $student->getHighestChoiceNumber();
+				if ( $highestChoiceNumber == -1 )
+					$skip = true;
+				if ( !$skip )
+				{
 						$highestChoiceID = $student->choices[$highestChoiceNumber]->id;
-						if ( $student->blockIsOpen($b) && !$careers[$highestChoiceID]->blockIsFull($b) )
+						$scheduledCareers = array(new Placement($highestChoiceID, $highestChoiceNumber));
+						
+						for ( $z = 0; $z < 3; $z++ )
 						{
-							echo "Assigned ".$student->id." to ".$highestChoiceID." for block ".$b."\n";
-							$students[$student->id]->assignBlock($b, new Placement($highestChoiceID, (4-$highestChoiceNumber), false));
-							$careers[$highestChoiceID]->addToBlock($b);
-							break;
+							if ( !$student->blockIsOpen($z) )
+								$scheduledCareers[] = $student->placements[$z];
 						}
-					}
+						
+						while ( count($scheduledCareers) < 3 )
+							$scheduledCareers[] = 0;
+						
+						$thisStudentSortSuccess = false;
+						for ( $a = 0; $a < 3; $a++ )
+						{
+							if ( $scheduledCareers[0]->isStatic() && $a != 0 ) // skip all itterations that would move a static event in block 1
+							{
+								for ( $b = 0; $b < 3; $b++ )
+								{
+									if ( $scheduledCareers[1]->isStatic() && $b != 0 ) // skip all itterations that would move a static event in block 2
+									{
+										for ( $c = 0; $c < 3; $c++ )
+										{
+											if ( $scheduledCareers[2]->isStatic() && $c != 0 ) // skip all itterations that would move a static event in block 1
+											{
+												$thisScheduleItteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
+												foreach ( $thisScheduleItteration as $blockNum => $careerObj )
+												{
+													$careerID = 0;
+													if ( is_object($careerObj) )
+														$careerID = $careerObj->id;
+														
+													if ( $careerID != 0 )
+													{
+														echo $careerID;
+														if ( $careers[$careerID]->blockIsFull($blockNum) || !$student->blockIsOpen($blockNum) )
+														{
+															echo "nope\n";
+															break;
+														}
+													}
+												}
+												$thisStudentSortSuccess = true;
+												print_r($thisScheduleItteration);
+												$student->placements = $thisScheduleItteration;
+												break;
+											}
+										}
+										if ( $thisStudentSortSuccess ) break;
+									}
+								}
+							}
+							if ( $thisStudentSortSuccess ) break;
+						}
+
+					
+					
+					/*for ( $bl = 0; $bl < 3; $bl++ )
+					{
+						$highestChoiceNumber = $student->getHighestChoiceNumber();
+						if ( $highestChoiceNumber != -1 )
+						{
+							$highestChoiceID = $student->choices[$highestChoiceNumber]->id;
+							if ( $student->blockIsOpen($bl) && !$careers[$highestChoiceID]->blockIsFull($bl) )
+							{
+								echo "Assigned ".$student->id." to ".$highestChoiceID." for block ".$b."\n";
+								$students[$student->id]->assignBlock($bl, new Placement($highestChoiceID, (4-$highestChoiceNumber), false));
+								$careers[$highestChoiceID]->addToBlock($bl);
+								break;
+							}
+						}
+					}*/
+				}
+				else
+				{
+					echo "Skipping...\n";
 				}
 			}
 		}
 	}
 }
-
+/*
 echo "--------------------\n";
 echo "\n\nSorting output";
 
@@ -199,6 +280,6 @@ foreach ( $students as $student)
 		echo ($i+1)." - ".$student->placements[$i]->id."\n";
 	}
 }
-
+*/
 echo "Completed in: ".round(microtime(true)-$startTime, 5)." microseconds.\n";
 ?>
