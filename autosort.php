@@ -200,7 +200,7 @@ for ( $i = 0; $i < 4; $i++ )
 						$thisChoice = new Placement($highestChoiceID, $highestChoiceNumber);
 						$scheduledCareers = array();
 						
-						for ( $z = 0; $z < 3; $z++ )
+						for ( $z = 0; $z < 3; $z++ ) // Fill empty slots
 						{
 							if ( !$student->blockIsOpen($z) )
 								$scheduledCareers[] = $student->placements[$z];
@@ -210,7 +210,7 @@ for ( $i = 0; $i < 4; $i++ )
 						
 						
 						
-						for ( $z = 0; $z < 3; $z++ )
+						for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
 						{
 							if ( $scheduledCareers[$z]->id == 0 )
 							{
@@ -223,17 +223,17 @@ for ( $i = 0; $i < 4; $i++ )
 						for ( $_a = 0; $_a < 3; $_a++ )
 						{
 							$a = $_a;
-							if ( $scheduledCareers[0]->isStatic() )
+							if ( $scheduledCareers[0]->isStatic() ) // Don't move static events!
 								$a = 0;
 							for ( $_b = 0; $_b < 3; $_b++ )
 							{
 								$b = $_b;
-								if ( $scheduledCareers[1]->isStatic() )
+								if ( $scheduledCareers[1]->isStatic() ) // Don't move static events!
 									$b = 1;
 								for ( $_c = 0; $_c < 3; $_c++ )
 								{
 									$c = $_c;
-									if ( $scheduledCareers[2]->isStatic() )
+									if ( $scheduledCareers[2]->isStatic() ) // Don't move static events!
 										$c = 2;
 									if ( uniqueIteration($a, $b, $c) )
 									{
