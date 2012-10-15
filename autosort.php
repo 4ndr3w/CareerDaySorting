@@ -2,6 +2,12 @@
 require_once "db.php";
 $startTime = microtime(true);
 
+function uniqueItteration($a, $b, $c)
+{
+	return ( $a != $b && $a != $c && $b != $c );
+}
+
+
 class Placement
 {
 	function __construct($id, $weight, $isStatic = false)
@@ -164,6 +170,8 @@ foreach ( $_students as $student )
 	$students[$thisStudent->id] = $thisStudent;
 }
 
+$itsRan = 0;
+
 for ( $i = 0; $i < 4; $i++ )
 {
 	foreach ($order as $currentSortingGrade )
@@ -187,64 +195,76 @@ for ( $i = 0; $i < 4; $i++ )
 					$skip = true;
 				if ( !$skip )
 				{
+					
 						$highestChoiceID = $student->choices[$highestChoiceNumber]->id;
-						$scheduledCareers = array(new Placement($highestChoiceID, $highestChoiceNumber));
+						$thisChoice = new Placement($highestChoiceID, $highestChoiceNumber);
+						$scheduledCareers = array();
 						
 						for ( $z = 0; $z < 3; $z++ )
 						{
 							if ( !$student->blockIsOpen($z) )
 								$scheduledCareers[] = $student->placements[$z];
+							else
+								$scheduledCareers[$z] = new Placement(0, 0);
 						}
 						
-						while ( count($scheduledCareers) < 3 )
-							$scheduledCareers[] = 0;
 						
-						$thisStudentSortSuccess = false;
-						for ( $a = 0; $a < 3; $a++ )
+						
+						for ( $z = 0; $z < 3; $z++ )
 						{
-							if ( $scheduledCareers[0]->isStatic() && $a != 0 ) // skip all itterations that would move a static event in block 1
+							if ( $scheduledCareers[$z]->id == 0 )
 							{
-								for ( $b = 0; $b < 3; $b++ )
+								$scheduledCareers[$z] = $thisChoice;
+								break;
+							}
+						}
+
+						$thisStudentSortSuccess = false;
+						for ( $_a = 0; $_a < 3; $_a++ )
+						{
+							$a = $_a;
+							if ( $scheduledCareers[0]->isStatic() )
+								$a = 0;
+							for ( $_b = 0; $_b < 3; $_b++ )
+							{
+								$b = $_b;
+								if ( $scheduledCareers[1]->isStatic() )
+									$b = 1;
+								for ( $_c = 0; $_c < 3; $_c++ )
 								{
-									if ( $scheduledCareers[1]->isStatic() && $b != 0 ) // skip all itterations that would move a static event in block 2
+									$c = $_c;
+									if ( $scheduledCareers[2]->isStatic() )
+										$c = 2;
+									if ( uniqueItteration($a, $b, $c) )
 									{
-										for ( $c = 0; $c < 3; $c++ )
+										$itsRan++;
+										$thisScheduleItteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
+										foreach ( $thisScheduleItteration as $blockNum => $careerObj )
 										{
-											if ( $scheduledCareers[2]->isStatic() && $c != 0 ) // skip all itterations that would move a static event in block 1
+											$careerID = 0;
+											if ( is_object($careerObj) )
+												$careerID = $careerObj->id;
+												
+											if ( $careerID != 0 )
 											{
-												$thisScheduleItteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
-												foreach ( $thisScheduleItteration as $blockNum => $careerObj )
-												{
-													$careerID = 0;
-													if ( is_object($careerObj) )
-														$careerID = $careerObj->id;
-														
-													if ( $careerID != 0 )
-													{
-														echo $careerID;
-														if ( $careers[$careerID]->blockIsFull($blockNum) || !$student->blockIsOpen($blockNum) )
-														{
-															echo "nope\n";
-															break;
-														}
-													}
-												}
-												$thisStudentSortSuccess = true;
-												print_r($thisScheduleItteration);
-												$student->placements = $thisScheduleItteration;
-												break;
+												if ( $careers[$careerID]->blockIsFull($blockNum) || !$student->blockIsOpen($blockNum) )
+													break;
 											}
 										}
-										if ( $thisStudentSortSuccess ) break;
+										$thisStudentSortSuccess = true;
+										
+										$students[$student->id]->placements = $thisScheduleItteration;
+										break;
 									}
 								}
+								if ( $thisStudentSortSuccess ) break;
 							}
 							if ( $thisStudentSortSuccess ) break;
 						}
 
-					
-					
-					/*for ( $bl = 0; $bl < 3; $bl++ )
+				
+					/*
+					for ( $bl = 0; $bl < 3; $bl++ )
 					{
 						$highestChoiceNumber = $student->getHighestChoiceNumber();
 						if ( $highestChoiceNumber != -1 )
@@ -262,13 +282,13 @@ for ( $i = 0; $i < 4; $i++ )
 				}
 				else
 				{
-					echo "Skipping...\n";
+					//echo "Skipping...\n";
 				}
 			}
 		}
 	}
 }
-/*
+
 echo "--------------------\n";
 echo "\n\nSorting output";
 
@@ -280,6 +300,6 @@ foreach ( $students as $student)
 		echo ($i+1)." - ".$student->placements[$i]->id."\n";
 	}
 }
-*/
+echo "Itterations ran: ".$itsRan."\n";
 echo "Completed in: ".round(microtime(true)-$startTime, 5)." microseconds.\n";
 ?>
