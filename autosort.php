@@ -261,24 +261,6 @@ for ( $i = 0; $i < 4; $i++ )
 							}
 							if ( $thisStudentSortSuccess ) break;
 						}
-
-				
-					/*
-					for ( $bl = 0; $bl < 3; $bl++ )
-					{
-						$highestChoiceNumber = $student->getHighestChoiceNumber();
-						if ( $highestChoiceNumber != -1 )
-						{
-							$highestChoiceID = $student->choices[$highestChoiceNumber]->id;
-							if ( $student->blockIsOpen($bl) && !$careers[$highestChoiceID]->blockIsFull($bl) )
-							{
-								echo "Assigned ".$student->id." to ".$highestChoiceID." for block ".$b."\n";
-								$students[$student->id]->assignBlock($bl, new Placement($highestChoiceID, (4-$highestChoiceNumber), false));
-								$careers[$highestChoiceID]->addToBlock($bl);
-								break;
-							}
-						}
-					}*/
 				}
 				else
 				{
