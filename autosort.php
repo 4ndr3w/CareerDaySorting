@@ -235,6 +235,7 @@ for ( $i = 0; $i < 4; $i++ )
 									$c = $_c;
 									if ( $scheduledCareers[2]->isStatic() ) // Don't move static events!
 										$c = 2;
+										
 									if ( uniqueIteration($a, $b, $c) )
 									{
 										$itsRan++;
@@ -252,10 +253,18 @@ for ( $i = 0; $i < 4; $i++ )
 											}
 										}
 										$thisStudentSortSuccess = true;
+
+										$student->placements = $thisScheduleIteration;
 										
-										$students[$student->id]->placements = $thisScheduleIteration;
+										for ( $z = 0; $z < 3; $z++ )
+										{
+											if ( $thisScheduleIteration[$z]->id == $highestChoiceID )
+												$careers[$thisScheduleIteration[$z]->id]->addToBlock($z);
+										}
+										
 										break;
 									}
+									
 								}
 								if ( $thisStudentSortSuccess ) break;
 							}
@@ -270,6 +279,21 @@ for ( $i = 0; $i < 4; $i++ )
 		}
 	}
 }
+
+/*
+// Block size debug
+foreach ( $careers as $career )
+{
+	echo $career->id." - (";
+	foreach ( $career->blockSizes as $z => $sz )
+	{
+		echo $sz;
+		if ( $z != 2 )
+			echo "-";
+	}
+	echo ")\n";
+}
+*/
 
 echo "--------------------\n";
 echo "\n\nSorting output";
