@@ -2,7 +2,7 @@
 require_once "db.php";
 $startTime = microtime(true);
 
-function uniqueItteration($a, $b, $c)
+function uniqueIteration($a, $b, $c)
 {
 	return ( $a != $b && $a != $c && $b != $c );
 }
@@ -235,11 +235,11 @@ for ( $i = 0; $i < 4; $i++ )
 									$c = $_c;
 									if ( $scheduledCareers[2]->isStatic() )
 										$c = 2;
-									if ( uniqueItteration($a, $b, $c) )
+									if ( uniqueIteration($a, $b, $c) )
 									{
 										$itsRan++;
-										$thisScheduleItteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
-										foreach ( $thisScheduleItteration as $blockNum => $careerObj )
+										$thisScheduleIteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
+										foreach ( $thisScheduleIteration as $blockNum => $careerObj )
 										{
 											$careerID = 0;
 											if ( is_object($careerObj) )
@@ -253,7 +253,7 @@ for ( $i = 0; $i < 4; $i++ )
 										}
 										$thisStudentSortSuccess = true;
 										
-										$students[$student->id]->placements = $thisScheduleItteration;
+										$students[$student->id]->placements = $thisScheduleIteration;
 										break;
 									}
 								}
@@ -300,6 +300,6 @@ foreach ( $students as $student)
 		echo ($i+1)." - ".$student->placements[$i]->id."\n";
 	}
 }
-echo "Itterations ran: ".$itsRan."\n";
+echo "Iterations ran: ".$itsRan."\n";
 echo "Completed in: ".round(microtime(true)-$startTime, 5)." microseconds.\n";
 ?>
