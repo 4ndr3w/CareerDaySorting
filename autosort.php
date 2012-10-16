@@ -7,7 +7,6 @@ function uniqueIteration($a, $b, $c)
 	return ( $a != $b && $a != $c && $b != $c );
 }
 
-
 class Placement
 {
 	function __construct($id, $weight, $isStatic = false)
@@ -38,6 +37,7 @@ class Choice
 	{
 		$this->id = $id;
 		$this->weight = $weight;
+		$this->possible = true;
 	}
 
 	function getWeight()
@@ -48,6 +48,11 @@ class Choice
 	function getAsPlacement()
 	{
 		return new Placement($this->id, $this->weight, false);
+	}
+	
+	function isPossible()
+	{
+		return $this->possible;
 	}
 }
 
@@ -144,6 +149,7 @@ $careers = array();
 $assemblyID = 99; // TODO: Change this to be dynamic
 $order = array(11,10,9,12);
 
+
 foreach ( $_careers as $career )
 {
 	$careers[$career['id']] = new Career($career['id'], $career['maxStudents']);
@@ -190,13 +196,13 @@ for ( $i = 0; $i < 4; $i++ )
 						$blocksFilled++;
 				}
 				$skip = ($blocksFilled==3);
-				$highestChoiceNumber = $student->getHighestChoiceNumber();
+				$highestChoiceNumber = $i;
 				if ( $highestChoiceNumber == -1 )
 					$skip = true;
 				if ( !$skip )
 				{
-					
-						$highestChoiceID = $student->choices[$highestChoiceNumber]->id;
+						echo "using choice ".$i."\n";
+						$highestChoiceID = $student->choices[$i]->id;
 						$thisChoice = new Placement($highestChoiceID, $highestChoiceNumber);
 						$scheduledCareers = array();
 						
@@ -207,8 +213,6 @@ for ( $i = 0; $i < 4; $i++ )
 							else
 								$scheduledCareers[$z] = new Placement(0, 0);
 						}
-						
-						
 						
 						for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
 						{
@@ -239,6 +243,7 @@ for ( $i = 0; $i < 4; $i++ )
 									if ( uniqueIteration($a, $b, $c) )
 									{
 										$itsRan++;
+										$invalid = false;
 										$thisScheduleIteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
 										foreach ( $thisScheduleIteration as $blockNum => $careerObj )
 										{
@@ -249,26 +254,40 @@ for ( $i = 0; $i < 4; $i++ )
 											if ( $careerID != 0 )
 											{
 												if ( $careers[$careerID]->blockIsFull($blockNum) || !$student->blockIsOpen($blockNum) )
+												{
+													echo "full\n";
+													$invalid = true;
 													break;
+												}
 											}
 										}
-										$thisStudentSortSuccess = true;
-
-										$student->placements = $thisScheduleIteration;
-										
-										for ( $z = 0; $z < 3; $z++ )
+										if ( !$invalid )
 										{
-											if ( $thisScheduleIteration[$z]->id == $highestChoiceID )
-												$careers[$thisScheduleIteration[$z]->id]->addToBlock($z);
+											$thisStudentSortSuccess = true;
+											if ( $thisStudentSortSuccess )
+											{
+												$student->placements = $thisScheduleIteration;
+												
+												for ( $z = 0; $z < 3; $z++ )
+												{
+													if ( $thisScheduleIteration[$z]->id == $highestChoiceID )
+														$careers[$thisScheduleIteration[$z]->id]->addToBlock($z);
+												}
+												
+												break;
+											}
 										}
-										
-										break;
 									}
 									
 								}
 								if ( $thisStudentSortSuccess ) break;
 							}
 							if ( $thisStudentSortSuccess ) break;
+						}
+						
+						if ( !$thisStudentSortSuccess )
+						{
+							$student->choices[$highestChoiceNumber]->possible = false;
 						}
 				}
 				else
@@ -279,6 +298,8 @@ for ( $i = 0; $i < 4; $i++ )
 		}
 	}
 }
+
+
 
 /*
 // Block size debug
