@@ -103,13 +103,16 @@ class Student
 		foreach ($this->choices as $k=>$choice)
 		{
 			$isThisChoice = true;
-			foreach ( $this->placements as $p )
+			if ( $choice->isPossible() )
 			{
-				if ( $p->id == $choice->id )
-					$isThisChoice = false;
+				foreach ( $this->placements as $p )
+				{
+					if ( $p->id == $choice->id )
+						$isThisChoice = false;
+				}
+				if ( $isThisChoice )
+					return $k;
 			}
-			if ( $isThisChoice )
-				return $k;
 		}
 		return -1;
 	}
@@ -201,93 +204,98 @@ for ( $i = 0; $i < 4; $i++ )
 					$skip = true;
 				if ( !$skip )
 				{
-						echo "using choice ".$i."\n";
-						$highestChoiceID = $student->choices[$i]->id;
-						$thisChoice = new Placement($highestChoiceID, $highestChoiceNumber);
-						$scheduledCareers = array();
-						
-						for ( $z = 0; $z < 3; $z++ ) // Fill empty slots
+						$highestChoiceNumber = $student->getHighestChoiceNumber();
+						$highestChoiceID = $student->choices[$highestChoiceNumber];
+						//echo "using choice ".$highestChoiceNumber." ID: ".$highestChoiceID->id."\n";
+						if ( $highestChoiceID != -1)
 						{
-							if ( !$student->blockIsOpen($z) )
-								$scheduledCareers[] = $student->placements[$z];
-							else
-								$scheduledCareers[$z] = new Placement(0, 0);
-						}
-						
-						for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
-						{
-							if ( $scheduledCareers[$z]->id == 0 )
+							$thisChoice = new Placement($highestChoiceID->id, $highestChoiceNumber);
+							$scheduledCareers = array();
+							
+							for ( $z = 0; $z < 3; $z++ ) // Fill empty slots
 							{
-								$scheduledCareers[$z] = $thisChoice;
-								break;
+								if ( !$student->blockIsOpen($z) )
+									$scheduledCareers[] = $student->placements[$z];
+								else
+									$scheduledCareers[$z] = new Placement(0, 0);
 							}
-						}
-
-						$thisStudentSortSuccess = false;
-						for ( $_a = 0; $_a < 3; $_a++ )
-						{
-							$a = $_a;
-							if ( $scheduledCareers[0]->isStatic() ) // Don't move static events!
-								$a = 0;
-							for ( $_b = 0; $_b < 3; $_b++ )
+							
+							for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
 							{
-								$b = $_b;
-								if ( $scheduledCareers[1]->isStatic() ) // Don't move static events!
-									$b = 1;
-								for ( $_c = 0; $_c < 3; $_c++ )
+								if ( $scheduledCareers[$z]->id == 0 )
 								{
-									$c = $_c;
-									if ( $scheduledCareers[2]->isStatic() ) // Don't move static events!
-										$c = 2;
-										
-									if ( uniqueIteration($a, $b, $c) )
+									//echo "Added choice in slot ".$z."\n";
+									$scheduledCareers[$z] = $thisChoice;
+									break;
+								}
+							}
+	
+							$thisStudentSortSuccess = false;
+							for ( $_a = 0; $_a < 3; $_a++ )
+							{
+								$a = $_a;
+								if ( $scheduledCareers[0]->isStatic() ) // Don't move static events!
+									$a = 0;
+								for ( $_b = 0; $_b < 3; $_b++ )
+								{
+									$b = $_b;
+									if ( $scheduledCareers[1]->isStatic() ) // Don't move static events!
+										$b = 1;
+									for ( $_c = 0; $_c < 3; $_c++ )
 									{
-										$itsRan++;
-										$invalid = false;
-										$thisScheduleIteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
-										foreach ( $thisScheduleIteration as $blockNum => $careerObj )
+										$c = $_c;
+										if ( $scheduledCareers[2]->isStatic() ) // Don't move static events!
+											$c = 2;
+											
+										if ( uniqueIteration($a, $b, $c) )
 										{
-											$careerID = 0;
-											if ( is_object($careerObj) )
-												$careerID = $careerObj->id;
-												
-											if ( $careerID != 0 )
+											$itsRan++;
+											$invalid = false;
+											//echo "In This Iteration: ".$a." - ".$b." - ".$c."\n";
+											$thisScheduleIteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
+											
+											for ($k = 0; $k < 4; $k++ )
 											{
-												if ( $careers[$careerID]->blockIsFull($blockNum) || !$student->blockIsOpen($blockNum) )
+												$careerObj = $thisScheduleIteration[$k];
+												$blockNum = $k;
+												$careerID = 0;
+												if ( is_object($careerObj) )
+													$careerID = $careerObj->id;
+												if ( $careerID != 0 )
 												{
-													echo "full\n";
-													$invalid = true;
+													if ( $careers[$careerID]->blockIsFull($blockNum) )
+														$invalid = true;
+												}
+											
+											}
+											if ( !$invalid )
+											{
+												$thisStudentSortSuccess = true;
+												if ( $thisStudentSortSuccess )
+												{
+													$student->placements = $thisScheduleIteration;
+													
+													for ( $z = 0; $z < 3; $z++ )
+													{
+														if ( $thisScheduleIteration[$z]->id == $highestChoiceID )
+															$careers[$thisScheduleIteration[$z]->id]->addToBlock($z);
+													}
+													
 													break;
 												}
 											}
 										}
-										if ( !$invalid )
-										{
-											$thisStudentSortSuccess = true;
-											if ( $thisStudentSortSuccess )
-											{
-												$student->placements = $thisScheduleIteration;
-												
-												for ( $z = 0; $z < 3; $z++ )
-												{
-													if ( $thisScheduleIteration[$z]->id == $highestChoiceID )
-														$careers[$thisScheduleIteration[$z]->id]->addToBlock($z);
-												}
-												
-												break;
-											}
-										}
+										
 									}
-									
+									if ( $thisStudentSortSuccess ) break;
 								}
 								if ( $thisStudentSortSuccess ) break;
 							}
-							if ( $thisStudentSortSuccess ) break;
-						}
-						
-						if ( !$thisStudentSortSuccess )
-						{
-							$student->choices[$highestChoiceNumber]->possible = false;
+							
+							if ( !$thisStudentSortSuccess )
+							{
+								$student->choices[$highestChoiceNumber]->possible = false;
+							}
 						}
 				}
 				else
