@@ -5,5 +5,7 @@ $databaseInfo = array(
 	"password" => "",
 	"database" => "careerday");
 
+$assemblyID = 99;
+
 session_start();
 ?>

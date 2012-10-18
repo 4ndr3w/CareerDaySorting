@@ -92,7 +92,7 @@ class Student
 	{
 		foreach ( $this->placements as $placement )
 		{
-			if ( $placement == 0 )
+			if ( $placement->id == 0 )
 				return false;
 		}
 		return true;
@@ -149,7 +149,6 @@ $_students = $database->getStudents();
 $students = array();
 $_careers = $database->getCareers();
 $careers = array();
-$assemblyID = 99; // TODO: Change this to be dynamic
 $order = array(11,10,9,12);
 
 
@@ -187,6 +186,7 @@ for ( $i = 0; $i < 4; $i++ )
 	{
 		foreach ( $students as $student )
 		{
+			
 			if ( $student->grade == $currentSortingGrade )
 			{
 				//echo "Sorting student ".$student->id." - Choice ".$i." - in grade ".$currentSortingGrade."\n";
@@ -298,43 +298,38 @@ for ( $i = 0; $i < 4; $i++ )
 							}
 						}
 				}
-				else
-				{
-					//echo "Skipping...\n";
-				}
 			}
 		}
 	}
 }
 
 
-
-/*
-// Block size debug
-foreach ( $careers as $career )
-{
-	echo $career->id." - (";
-	foreach ( $career->blockSizes as $z => $sz )
-	{
-		echo $sz;
-		if ( $z != 2 )
-			echo "-";
-	}
-	echo ")\n";
-}
-*/
-
 echo "--------------------\n";
-echo "\n\nSorting output";
-
+$stats = array("success"=>0, "failed"=>0, "total"=>0);
 foreach ( $students as $student)
 {
-	echo "\n\nStudent: ".$student->id."\n";
-	for ( $i = 0; $i<3; $i++ )
+	//echo "\n\nStudent: ".$student->id."\n";
+	$stats['total']++;
+	if ( $student->isFullySorted() )
 	{
-		echo ($i+1)." - ".$student->placements[$i]->id."\n";
+		$stats['success']++;
+		//for ( $i = 0; $i < 3; $i++ )
+		//	echo ($i+1)." - ".$student->placements[$i]->id."\n";
+			
+		mysql_query("DELETE FROM `placements` WHERE `id` = ".$student->id);
+		mysql_query("INSERT INTO `placements` (id, p1, p2, p3) VALUES(".$student->id.", ".$student->placements[0]->id.", ".$student->placements[1]->id.", ".$student->placements[2]->id.")");
 	}
+	else 
+		$stats['failed']++;
 }
+
+echo "Statistics:\n";
+
+echo "	Successful: ".(($stats['success']/$stats['total'])*100)."%\n";
+echo "	Failed: ".(($stats['failed']/$stats['total'])*100)."%\n";
+echo "	Total Sorted: ".$stats['total']."\n";
+
 echo "Iterations ran: ".$itsRan."\n";
-echo "Completed in: ".round(microtime(true)-$startTime, 5)." microseconds.\n";
+echo "Completed in: ".round(microtime(true)-$startTime, 5)." milliseconds.\n";
+echo "--------------------\n";
 ?>
