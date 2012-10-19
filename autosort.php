@@ -308,14 +308,10 @@ echo "--------------------\n";
 $stats = array("success"=>0, "failed"=>0, "total"=>0);
 foreach ( $students as $student)
 {
-	//echo "\n\nStudent: ".$student->id."\n";
 	$stats['total']++;
 	if ( $student->isFullySorted() )
 	{
 		$stats['success']++;
-		//for ( $i = 0; $i < 3; $i++ )
-		//	echo ($i+1)." - ".$student->placements[$i]->id."\n";
-			
 		mysql_query("DELETE FROM `placements` WHERE `id` = ".$student->id);
 		mysql_query("INSERT INTO `placements` (id, p1, p2, p3) VALUES(".$student->id.", ".$student->placements[0]->id.", ".$student->placements[1]->id.", ".$student->placements[2]->id.")");
 	}
@@ -325,11 +321,18 @@ foreach ( $students as $student)
 
 echo "Statistics:\n";
 
-echo "	Successful: ".(($stats['success']/$stats['total'])*100)."%\n";
-echo "	Failed: ".(($stats['failed']/$stats['total'])*100)."%\n";
-echo "	Total Sorted: ".$stats['total']."\n";
+$database->resetStatistics();
 
-echo "Iterations ran: ".$itsRan."\n";
-echo "Completed in: ".round(microtime(true)-$startTime, 5)." milliseconds.\n";
+$database->addStatistic("Successful", (($stats['success']/$stats['total'])*100));
+$database->addStatistic("Failed", (($stats['failed']/$stats['total'])*100));
+$database->addStatistic("Total", $stats['total']);
+$database->addStatistic("Iterations", $itsRan);
+$database->addStatistic("Time to complete", round(microtime(true)-$startTime, 5)." ms");
+
+$stats = $database->getStatistics();
+foreach ( $stats as $stat )
+{
+	echo $stat['name']." - ".$stat['value']."\n";
+}
 echo "--------------------\n";
 ?>

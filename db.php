@@ -161,6 +161,23 @@ class Database
 		return $this->genaricGet("students", $id);
 	}
 	
+	function getStudentsIn($class, $block)
+	{
+		$block = intval($block);
+		if ( ($class = intval($class)) == 0 )
+			return false;
+		$block = "p".($block+1);
+		
+		$result = mysql_query("SELECT * FROM `placements` WHERE `".$block."` =  ".$class);
+		$output = array();
+		while ( $d = mysql_fetch_array($result, MYSQL_ASSOC) )
+		{
+			if ( !empty($d) )
+				$output[] = $d;
+		}
+		return $output;
+	}
+	
 	function getStudents()
 	{
 		return $this->genaricGetSet("students");
@@ -180,6 +197,21 @@ class Database
 		$this->clearStudentChoices($_POST['id']);
 		$this->clearStudentPlacement($_POST['id']);
 		return true;
+	}
+	
+	function addStatistic($name, $value)
+	{
+		mysql_query("INSERT INTO `statistics` (name, value) VALUES('".$name."', '".$value."')");
+	}
+	
+	function getStatistics()
+	{
+		return $this->genaricGetSet("statistics");
+	}
+	
+	function resetStatistics()
+	{
+		mysql_query("DELETE FROM `statistics`");
 	}
 	
 }
