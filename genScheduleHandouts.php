@@ -27,11 +27,7 @@ array_multisort($pivot, SORT_DESC, $students);
 <style type="text/css">
 .schedule
 {
-	-webkit-column-break-inside: avoid;
-	-moz-column-break-inside: avoid;
-	column-break-inside: avoid;
-	page-break-after:avoid;
-	page-break-before:avoid;
+	page-break-inside:avoid;
 }
 </style>
 
@@ -45,7 +41,7 @@ foreach ( $students as $student )
 <p class="schedule">
 <?php
 	$placements = $database->getStudentPlacement($student['id']);
-	echo "ID: ".$student['id']." - ".$student['first']." ".$student['last']." - HR: ".$student['homeroom']."<br>";
+	echo "ID: ".$student['id']." - <strong>".$student['first']." ".$student['last']."</strong> - HR: ".$student['homeroom']."<br>";
 	for ( $i = 1; $i < 4; $i++ )
 	{
 		$career = $database->getCareer($placements["p".$i]);
