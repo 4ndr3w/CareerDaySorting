@@ -33,11 +33,16 @@ class Placement
 
 class Choice
 {
-	function __construct($id, $weight)
+	function __construct($id, $weight, $group)
 	{
 		$this->id = $id;
 		$this->weight = $weight;
 		$this->possible = true;
+	}
+	
+	function getGroup()
+	{
+		return $this->group;
 	}
 
 	function getWeight()
@@ -72,6 +77,26 @@ class Student
 		$this->placements[0] = new Placement(0, -1);
 		$this->placements[1] = new Placement(0, -1);
 		$this->placements[2] = new Placement(0, -1);
+	}
+	
+	function getMostPopularChoiceGroup()
+	{
+		$choiceGroups = array()
+		for ($i = 0; $i < 4; $i++ )
+		{
+			$choiceGroups[$this->choices[$i]->getGroup()]++;
+		}
+		$highestCGCount = 0;
+		$highestCGID = 0;
+		foreach ( $choiceGroups as $k => $cg )
+		{
+			if ( $k > $highestCGCount )
+			{
+				$highestCGID = $cg;
+				$highestCGCount = $k;
+			}
+		}
+		return $highestCGID;
 	}
 	
 	function assignBlock($blockNum, $placement)
@@ -154,7 +179,7 @@ $order = array(11,10,9,12);
 
 foreach ( $_careers as $career )
 {
-	$careers[$career['id']] = new Career($career['id'], $career['maxStudents']);
+	$careers[$career['id']] = new Career($career['id'], $career['maxStudents'], $career['group']);
 }
 
 // Convert mysql data to an array of Student objects, also assign the assembly block as static
@@ -300,6 +325,17 @@ for ( $i = 0; $i < 4; $i++ )
 				}
 			}
 		}
+	}
+}
+
+
+foreach ( $students as $student )
+{
+	if ( !$student->isFullySorted() )
+	{
+		$choiceGroup = $student->getMostPopularChoiceGroup();
+		$careersInGroup = $database->getCareersInGroup($choiceGroup);
+		
 	}
 }
 

@@ -69,6 +69,22 @@ class Database
 		return $this->genaricGetSet("careers");
 	}
 	
+	function getCareersInGroup($groupID)
+	{
+		if ( ($groupID = intval($groupID)) == 0 )
+			return false;
+		$result = mysql_query("SELECT * FROM `careers` WHERE `group` = ".$groupID);
+		
+		$output = array();
+		while ( $d = mysql_fetch_array($result, MYSQL_ASSOC) )
+		{
+			if ( !empty($d) )
+				$output[] = $d;
+		}
+		return $output;
+		
+	}
+	
 	function removeCareer($id)
 	{
 		return $this->genaricRemove("careers", $id);
