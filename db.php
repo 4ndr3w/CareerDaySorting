@@ -69,6 +69,12 @@ class Database
 		return $this->genaricGetSet("careers");
 	}
 	
+	function getGroupForCareer($id)
+	{
+		$result = $this->genaricGet("careers", $id);
+		return $result['group'];
+	}
+	
 	function getCareersInGroup($groupID)
 	{
 		if ( ($groupID = intval($groupID)) == 0 )
@@ -233,3 +239,4 @@ class Database
 }
 
 $database = new Database();
+?>

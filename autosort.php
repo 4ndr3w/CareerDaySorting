@@ -35,9 +35,14 @@ class Choice
 {
 	function __construct($id, $weight, $group)
 	{
+		global $database;
+		
 		$this->id = $id;
 		$this->weight = $weight;
 		$this->possible = true;
+		if ( $group == 0 )
+			$group = $database->getGroupForCareer($id);
+		$this->group = $group;
 	}
 	
 	function getGroup()
@@ -88,12 +93,12 @@ class Student
 		}
 		$highestCGCount = 0;
 		$highestCGID = 0;
-		foreach ( $choiceGroups as $k => $cg )
+		foreach ( $choiceGroups as $k => $count )
 		{
-			if ( $k > $highestCGCount )
+			if ( $count > $highestCGCount && $k != 0 )
 			{
-				$highestCGID = $cg;
-				$highestCGCount = $k;
+				$highestCGID = $k;
+				$highestCGCount = $count;
 			}
 		}
 		return $highestCGID;
