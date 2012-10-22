@@ -257,7 +257,7 @@ for ( $i = 0; $i < 4; $i++ )
 								}
 							}
 	
-							attemptSchedule($scheduledCareers);	
+							attemptSchedule($scheduledCareers, $highestChoiceID, $student, $careers);	
 						}
 				}
 			}

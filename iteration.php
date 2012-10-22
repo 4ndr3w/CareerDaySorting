@@ -1,11 +1,8 @@
 <?php
 require_once "db.php";
 
-function attemptSchedule($scheduledCareers)
+function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers)
 {
-	global $careers;
-	global $students;
-	
 	$thisStudentSortSuccess = false;
 	for ( $_a = 0; $_a < 3; $_a++ )
 	{
@@ -53,8 +50,7 @@ function attemptSchedule($scheduledCareers)
 													
 							for ( $z = 0; $z < 3; $z++ )
 							{
-								print_r($careers);
-								if ( $thisScheduleIteration[$z]->id == $highestChoiceID )
+								if ( $thisScheduleIteration[$z]->id == $newCareerID )
 									$careers[$thisScheduleIteration[$z]->id]->addToBlock($z);
 							}
 													
