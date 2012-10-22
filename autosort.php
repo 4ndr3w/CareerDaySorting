@@ -325,8 +325,8 @@ echo "Statistics:\n";
 
 $database->resetStatistics();
 
-$database->addStatistic("Successful", (($stats['success']/$stats['total'])*100));
-$database->addStatistic("Failed", (($stats['failed']/$stats['total'])*100));
+$database->addStatistic("Successful", (($stats['success']/$stats['total'])*100)."%");
+$database->addStatistic("Failed", (($stats['failed']/$stats['total'])*100)."%");
 $database->addStatistic("Total", $stats['total']);
 $database->addStatistic("Iterations", $itsRan);
 $database->addStatistic("Time to complete", round(microtime(true)-$startTime, 5)." ms");
