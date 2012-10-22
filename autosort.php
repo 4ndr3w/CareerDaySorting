@@ -236,34 +236,34 @@ for ( $i = 0; $i < 4; $i++ )
 					$skip = true;
 				if ( !$skip )
 				{
-						$highestChoiceNumber = $student->getHighestChoiceNumber();
-						$highestChoiceID = $student->choices[$highestChoiceNumber];
-						//echo "using choice ".$highestChoiceNumber." ID: ".$highestChoiceID->id."\n";
-						if ( $highestChoiceID != -1)
+					$highestChoiceNumber = $student->getHighestChoiceNumber();
+					$highestChoiceID = $student->choices[$highestChoiceNumber];
+					//echo "using choice ".$highestChoiceNumber." ID: ".$highestChoiceID->id."\n";
+					if ( $highestChoiceID != -1)
+					{
+						$thisChoice = new Placement($highestChoiceID->id, $highestChoiceNumber);
+						$scheduledCareers = array();
+							
+						for ( $z = 0; $z < 3; $z++ ) // Fill empty slots
 						{
-							$thisChoice = new Placement($highestChoiceID->id, $highestChoiceNumber);
-							$scheduledCareers = array();
-							
-							for ( $z = 0; $z < 3; $z++ ) // Fill empty slots
-							{
-								if ( !$student->blockIsOpen($z) )
-									$scheduledCareers[] = $student->placements[$z];
-								else
-									$scheduledCareers[$z] = new Placement(0, 0);
-							}
-							
-							for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
-							{
-								if ( $scheduledCareers[$z]->id == 0 )
-								{
-									//echo "Added choice in slot ".$z."\n";
-									$scheduledCareers[$z] = $thisChoice;
-									break;
-								}
-							}
-	
-							attemptSchedule($scheduledCareers, $highestChoiceID, $student, $careers);	
+							if ( !$student->blockIsOpen($z) )
+								$scheduledCareers[] = $student->placements[$z];
+							else
+								$scheduledCareers[$z] = new Placement(0, 0);
 						}
+							
+						for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
+						{
+							if ( $scheduledCareers[$z]->id == 0 )
+							{
+								//echo "Added choice in slot ".$z."\n";
+								$scheduledCareers[$z] = $thisChoice;
+								break;
+							}
+						}
+	
+						attemptSchedule($scheduledCareers, $highestChoiceID, $student, $careers);	
+					}
 				}
 			}
 		}
@@ -277,7 +277,31 @@ foreach ( $students as $student )
 	{
 		$choiceGroup = $student->getMostPopularChoiceGroup();
 		$careersInGroup = $database->getCareersInGroup($choiceGroup);
-		
+		foreach ( $careersInGroup as $career )
+		{
+			if ( $student->isFullySorted() )
+				break;
+			
+			$scheduledCareers = array();
+			
+			for ( $z = 0; $z < 3; $z++ ) // Fill empty slots
+			{
+				if ( !$student->blockIsOpen($z) )
+					$scheduledCareers[$z] = $student->placements[$z];
+				else
+					$scheduledCareers[$z] = new Placement(0, 0);
+			}
+							
+			for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
+			{
+				if ( $scheduledCareers[$z]->id == 0 )
+				{
+					$scheduledCareers[$z] = $career->id;
+					break;
+				}
+			}
+			attemptSchedule($scheduledCareers, $career->id, $student, $careers, false);
+		}
 	}
 }
 

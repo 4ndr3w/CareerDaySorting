@@ -1,7 +1,7 @@
 <?php
 require_once "db.php";
 
-function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers)
+function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, $isChoice = true)
 {
 	$thisStudentSortSuccess = false;
 	for ( $_a = 0; $_a < 3; $_a++ )
@@ -65,7 +65,7 @@ function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers)
 		if ( $thisStudentSortSuccess ) break;
 	}
 							
-	if ( !$thisStudentSortSuccess )
+	if ( !$thisStudentSortSuccess && $isChoice )
 	{
 		$student->choices[$highestChoiceNumber]->possible = false;
 	}
