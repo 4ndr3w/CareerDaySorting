@@ -221,8 +221,6 @@ for ( $i = 0; $i < 4; $i++ )
 			
 			if ( $student->grade == $currentSortingGrade )
 			{
-				//echo "Sorting student ".$student->id." - Choice ".$i." - in grade ".$currentSortingGrade."\n";
-				
 				$skip = false;
 				$blocksFilled = 0;
 				for ( $z = 0; $z < 3; $z++ )
@@ -238,7 +236,7 @@ for ( $i = 0; $i < 4; $i++ )
 				{
 					$highestChoiceNumber = $student->getHighestChoiceNumber();
 					$highestChoiceID = $student->choices[$highestChoiceNumber];
-					//echo "using choice ".$highestChoiceNumber." ID: ".$highestChoiceID->id."\n";
+
 					if ( $highestChoiceID != -1)
 					{
 						$thisChoice = new Placement($highestChoiceID->id, $highestChoiceNumber);
@@ -256,7 +254,6 @@ for ( $i = 0; $i < 4; $i++ )
 						{
 							if ( $scheduledCareers[$z]->id == 0 )
 							{
-								//echo "Added choice in slot ".$z."\n";
 								$scheduledCareers[$z] = $thisChoice;
 								break;
 							}
