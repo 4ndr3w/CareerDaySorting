@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Career Day Selection</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="main.css">
+	</head>
+	<body>
 <?php
 require_once("db.php");
 
@@ -33,26 +41,35 @@ if ( !empty($notice) )
 }
 ?>
 
-<form method="post" action="">
-	Student ID#: <input type="text" name="id"><br>
-	First Name: <input type="text" name="first"><br>
-	Last Name: <input type="text" name="last"><br>
-	Homeroom #: <input type="text" name="homeroom"><br>
-	Grade: <select name="grade">
-		<option value="0" selected="selected" disabled="disabled">Select One</option>
-		<option value="9">Freshman</option>
-		<option value="10">Sophomore</option>
-		<option value="11">Junior</option>
-		<option value="12">Senior</option>
-	</select><br><br>
-	
-	Selections: <br>
-	
+<form method="post" action="return">
+	<div id="sect-0">
+		Student ID#: <input type="text" name="id">
+	</div>
+	<div id="sect-1">
+		First Name: <input type="text" name="first">
+	</div>
+	<div id="sect-2">
+		Last Name: <input type="text" name="last">
+	</div>
+	<div id="sect-3">
+		Homeroom #: <input type="text" name="homeroom">
+	</div>
+	<div id="sect-4">
+		Grade:
+		<select name="grade">
+			<option value="0" selected="selected" disabled="disabled">Select One</option>
+			<option value="9">Freshman</option>
+			<option value="10">Sophomore</option>
+			<option value="11">Junior</option>
+			<option value="12">Senior</option>
+		</select>
+	</div>
 	<?php 
 	for ( $i = 0; $i < 4; $i++ )
 	{
 		$n = $i+1;
 	?>
+		<div id="sect-<?php echo ($n + 5) ?>">
 		Choice <?php echo $n; ?>: 
 		<select name="c<?php echo $n; ?>">
 			<option value="0" selected="selected" disabled="disabled">Select One</option>
@@ -64,7 +81,9 @@ if ( !empty($notice) )
 			<?php
 			}
 			?>
-		</select><br>
+		</select>
+		</div>
+		
 	<?php
 	}
 	?>
@@ -72,3 +91,5 @@ if ( !empty($notice) )
 
 	<input type="submit" name="submit" value="Signup">
 </form>
+	</body>
+</html>
