@@ -1,7 +1,7 @@
 <?php
 require_once "db.php";
 $startTime = microtime(true);
-
+$itsRan = 0;
 function uniqueIteration($a, $b, $c)
 {
 	return ( $a != $b && $a != $c && $b != $c );
@@ -208,7 +208,6 @@ foreach ( $_students as $student )
 	$students[$thisStudent->id] = $thisStudent;
 }
 
-$itsRan = 0;
 
 require_once("iteration.php");
 
@@ -259,7 +258,7 @@ for ( $i = 0; $i < 4; $i++ )
 							}
 						}
 	
-						attemptSchedule($scheduledCareers, $highestChoiceID, $student, $careers);	
+						attemptSchedule($scheduledCareers, $highestChoiceID, $student, $careers, $itsRan);	
 					}
 				}
 			}
@@ -297,7 +296,7 @@ foreach ( $students as $student )
 					break;
 				}
 			}
-			attemptSchedule($scheduledCareers, $career->id, $student, $careers, false);
+			attemptSchedule($scheduledCareers, $career->id, $student, $careers, $itsRan, false);
 		}
 	}
 }
@@ -326,7 +325,7 @@ $database->addStatistic("Successful", (($stats['success']/$stats['total'])*100).
 $database->addStatistic("Failed", (($stats['failed']/$stats['total'])*100)."%");
 $database->addStatistic("Total", $stats['total']);
 $database->addStatistic("Iterations", $itsRan);
-$database->addStatistic("Time to complete", round(microtime(true)-$startTime, 5)." ms");
+$database->addStatistic("Time to complete", round((microtime(true)-$startTime)*10, 5)." ms");
 
 $stats = $database->getStatistics();
 foreach ( $stats as $stat )

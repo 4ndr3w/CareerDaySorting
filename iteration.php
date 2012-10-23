@@ -1,7 +1,7 @@
 <?php
 require_once "db.php";
 
-function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, $isChoice = true)
+function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, &$itsRan, $isChoice = true)
 {
 	$thisStudentSortSuccess = false;
 	for ( $_a = 0; $_a < 3; $_a++ )
