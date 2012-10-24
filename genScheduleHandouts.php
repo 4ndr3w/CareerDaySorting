@@ -2,15 +2,6 @@
 require_once("db.php");
 $students = $database->getStudents();
 
-function sortHelper($a, $b)
-{
-	if ($a['homeroom'] == $b['homeroom']) {
-		return 0;
-	}
-	return ($a['homeroom'] < $b['homeroom']) ? -1 : 1;
-}
-
-
 $pivot = array();
 foreach ( $students as $k=>$v )
 {
