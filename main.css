@@ -1,0 +1,40 @@
+body{
+	margin:0;
+}
+
+#container{
+	width:1000px;
+	margin:auto;
+}
+
+#header{
+	width:1000px;
+	height:100px;
+	background-color:gray;
+}
+
+#process{
+	width:900px;
+	height:80px;
+	margin-left:50px;
+	background-color:lightgray;
+}
+
+#conformation{
+	width:230px;
+	height:300px;
+	margin-left:50px;
+	background-color:darkgray;
+	float:left;
+}
+
+#formarea{
+	width:670px;
+	height:300px;
+	background-color:blue;
+	float:left;
+}
+
+.sect{
+	display:none;
+}
