@@ -324,14 +324,10 @@ $stats = array("success"=>0, "failed"=>0, "total"=>0);
 foreach ( $students as $student )
 {
 	$stats['total']++;
-	if ( $student->isFullySorted() )
-	{
-		$stats['success']++;
-		mysql_query("DELETE FROM `placements` WHERE `id` = ".$student->id);
-		mysql_query("INSERT INTO `placements` (id, p1, p2, p3) VALUES(".$student->id.", ".$student->placements[0]->id.", ".$student->placements[1]->id.", ".$student->placements[2]->id.")");
-	}
-	else 
-		$stats['failed']++;
+	( $student->isFullySorted() ? $stats['success']++ : $stats['failed']++ );
+	mysql_query("DELETE FROM `placements` WHERE `id` = ".$student->id);
+	mysql_query("INSERT INTO `placements` (id, p1, p2, p3) VALUES(".$student->id.", ".$student->placements[0]->id.", ".$student->placements[1]->id.", ".$student->placements[2]->id.")");
+
 }
 
 echo "Statistics:\n";
