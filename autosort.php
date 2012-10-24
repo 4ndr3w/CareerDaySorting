@@ -104,6 +104,17 @@ class Student
 		return $highestCGID;
 	}
 	
+	function getChoiceGroupsByPopularity()
+	{
+		$choiceGroups = array();
+		for ($i = 0; $i < 4; $i++ )
+		{
+			$choiceGroups[$this->choices[$i]->getGroup()]++;
+		}
+		arsort($choiceGroups);
+		return $choiceGroups;
+	}
+	
 	function assignBlock($blockNum, $placement)
 	{
 		$this->placements[$blockNum] = $placement;
@@ -271,32 +282,38 @@ foreach ( $students as $student )
 {
 	if ( !$student->isFullySorted() )
 	{
-		$choiceGroup = $student->getMostPopularChoiceGroup();
-		$careersInGroup = $database->getCareersInGroup($choiceGroup);
-		foreach ( $careersInGroup as $career )
+		$choiceGroups = $student->getChoiceGroupsByPopularity();
+		foreach ( $choiceGroups as $choiceGroup )
 		{
 			if ( $student->isFullySorted() )
 				break;
 			
-			$scheduledCareers = array();
-			
-			for ( $z = 0; $z < 3; $z++ ) // Fill empty slots
+			$careersInGroup = $database->getCareersInGroup($choiceGroup);
+			foreach ( $careersInGroup as $career )
 			{
-				if ( !$student->blockIsOpen($z) )
-					$scheduledCareers[$z] = $student->placements[$z];
-				else
-					$scheduledCareers[$z] = new Placement(0, 0);
-			}
-							
-			for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
-			{
-				if ( $scheduledCareers[$z]->id == 0 )
-				{
-					$scheduledCareers[$z] = $career->id;
+				if ( $student->isFullySorted() )
 					break;
+			
+				$scheduledCareers = array();
+			
+				for ( $z = 0; $z < 3; $z++ ) // Fill empty slots
+				{
+					if ( !$student->blockIsOpen($z) )
+						$scheduledCareers[$z] = $student->placements[$z];
+					else
+						$scheduledCareers[$z] = new Placement(0, 0);
 				}
+							
+				for ( $z = 0; $z < 3; $z++ ) // Add next choice to list
+				{
+					if ( $scheduledCareers[$z]->id == 0 )
+					{
+						$scheduledCareers[$z] = $career->id;
+						break;
+					}
+				}
+				attemptSchedule($scheduledCareers, $career->id, $student, $careers, $itsRan, false);
 			}
-			attemptSchedule($scheduledCareers, $career->id, $student, $careers, $itsRan, false);
 		}
 	}
 }
@@ -304,7 +321,7 @@ foreach ( $students as $student )
 
 echo "--------------------\n";
 $stats = array("success"=>0, "failed"=>0, "total"=>0);
-foreach ( $students as $student)
+foreach ( $students as $student )
 {
 	$stats['total']++;
 	if ( $student->isFullySorted() )
