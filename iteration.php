@@ -27,7 +27,7 @@ function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, &$
 					//echo "In This Iteration: ".$a." - ".$b." - ".$c."\n";
 					$thisScheduleIteration = array($a=>$scheduledCareers[0], $b => $scheduledCareers[1], $c => $scheduledCareers[2]);	
 											
-					for ($k = 0; $k < 4; $k++ )
+					for ($k = 0; $k < 3; $k++ )
 					{
 						$careerObj = $thisScheduleIteration[$k];
 						$blockNum = $k;
@@ -44,18 +44,8 @@ function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, &$
 					if ( !$invalid )
 					{
 						$thisStudentSortSuccess = true;
-						if ( $thisStudentSortSuccess )
-						{
-							$student->placements = $thisScheduleIteration;
-													
-							for ( $z = 0; $z < 3; $z++ )
-							{
-								if ( $thisScheduleIteration[$z]->id == $newCareerID )
-									$careers[$thisScheduleIteration[$z]->id]->addToBlock($z);
-							}
-													
-							break;
-						}
+						$student->placements = $thisScheduleIteration;									
+						break;
 					}
 				}
 										
