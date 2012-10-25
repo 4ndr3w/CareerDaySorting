@@ -315,15 +315,25 @@ foreach ( $students as $student )
 	$stats['total']++;
 	( $student->isFullySorted() ? $stats['success']++ : $stats['failed']++ );
 	mysql_query("INSERT INTO `placements` (id, p1, p2, p3) VALUES(".$student->id.", ".$student->placements[0]->id.", ".$student->placements[1]->id.", ".$student->placements[2]->id.")");
+
+	foreach ( $student->placements as $placement )
+	{
+		if ( $placement->id == $student->choices[0]->id )
+		{
+			$stats['gotFirstChoice']++;
+			break;
+		}
+	}
 }
 
 echo "Statistics:\n";
 
 $database->resetStatistics();
 
-$database->addStatistic("Successful", (($stats['success']/$stats['total'])*100)."%");
-$database->addStatistic("Failed", (($stats['failed']/$stats['total'])*100)."%");
 $database->addStatistic("Total", $stats['total']);
+$database->addStatistic("Fully Sorted", (($stats['success']/$stats['total'])*100)."%");
+$database->addStatistic("Partially Sorted", (($stats['failed']/$stats['total'])*100)."%");
+$database->addStatistic("Got First Choice", (($stats['gotFirstChoice']/$stats['total'])*100)."%");
 $database->addStatistic("Iterations", $itsRan);
 $database->addStatistic("Time to complete", round((microtime(true)-$startTime), 5)." sec");
 
