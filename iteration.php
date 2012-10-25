@@ -3,6 +3,12 @@ require_once "db.php";
 
 function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, &$itsRan, $isChoice = true)
 {
+	foreach ( $student->placements as $k => $placement )
+	{
+		if ( $placement->id != 0 )
+			$careers[$placement->id]->removeFromBlock($k);
+	}
+	
 	$thisStudentSortSuccess = false;
 	for ( $_a = 0; $_a < 3; $_a++ )
 	{
@@ -59,6 +65,13 @@ function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, &$
 	{
 		$student->choices[$highestChoiceNumber]->possible = false;
 	}
+	
+	foreach ( $student->placements as $k => $placement )
+	{
+		if ( $placement->id != 0 )
+			$careers[$placement->id]->addToBlock($k);
+	}
+	
 	return $thisStudentSortSuccess;
 }
 ?>
