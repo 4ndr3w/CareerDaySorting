@@ -96,6 +96,15 @@ class Database
 		return $this->genaricRemove("careers", $id);
 	}
 	
+	function getNumberOfStudentsInCareer($id, $block)
+	{
+		if ( ($block = intval($block)) == 0 )
+			return false;
+
+		$result = mysql_query("SELECT * FROM `placements` WHERE `p".$block."` = ".$id);
+		return mysql_num_rows($result);
+	}
+
 	function setStudentChoices($id, $c1, $c2, $c3, $c4)
 	{
 		if ( ($id = intval($id)) == 0 )
