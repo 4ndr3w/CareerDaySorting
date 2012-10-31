@@ -2,11 +2,8 @@
 require_once "db.php";
 
 if ( array_key_exists("id", $_POST) )
-{
-	print_r($_POST);
 	$database->updateStudentPlacement($_POST['id'], $_POST['p1'], $_POST['p2'], $_POST['p3']);
-	echo mysql_error();
-}
+
 
 $students = $database->getStudents();
 $careers = $database->getCareers();
