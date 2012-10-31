@@ -192,7 +192,7 @@ $_careers = $database->getCareers();
 $careers = array();
 $order = array(11,10,9,12);
 
-shuffle($_careers);
+shuffle($_students);
 
 foreach ( $_careers as $career )
 {
