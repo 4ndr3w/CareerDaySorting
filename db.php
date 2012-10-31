@@ -28,13 +28,15 @@ class Database
 		return mysql_fetch_array($result, MYSQL_ASSOC);
 	}
 	
-	function genaricGetSet($table)
+	function genaricGetSet($table,$idAsKey = false)
 	{
 		$result = mysql_query("SELECT * FROM ".$table);
 		$output = array();
 		while ( $d = mysql_fetch_array($result, MYSQL_ASSOC) )
 		{
-			if ( !empty($d) )
+			if ( $idAsKey && !empty($d) )
+				$output[$d['id']] = $d;
+			else if ( !empty($d) )
 				$output[] = $d;
 		}
 		return $output;
@@ -66,7 +68,7 @@ class Database
 	
 	function getCareers()
 	{
-		return $this->genaricGetSet("careers");
+		return $this->genaricGetSet("careers", true);
 	}
 	
 	function getGroupForCareer($id)
@@ -211,7 +213,7 @@ class Database
 	
 	function getStudents()
 	{
-		return $this->genaricGetSet("students");
+		return $this->genaricGetSet("students", true);
 	}
 	
 	function removeStudent($id)
