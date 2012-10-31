@@ -1,6 +1,13 @@
 <?php
 require_once "db.php";
 
+if ( array_key_exists("id", $_POST) )
+{
+	print_r($_POST);
+	$database->updateStudentPlacement($_POST['id'], $_POST['p1'], $_POST['p2'], $_POST['p3']);
+	echo mysql_error();
+}
+
 $students = $database->getStudents();
 $careers = $database->getCareers();
 $student = array();
@@ -79,7 +86,8 @@ if ( empty($_student) )
 		</table>
 		
 		<br>
-		
+		<form action="" method="post">
+			<input type="hidden" name="id" value="<?php echo $student['id']; ?>">
 		<table class="schedule" border="1">
 			<tr>
 				<td colspan="100%"><center><strong>Schedule</strong></center></td>
@@ -94,9 +102,9 @@ if ( empty($_student) )
 				$thisBlock = ($i+1);
 			?>
 			<tr>
-				<td><?php echo $thisBlock;?></td>
+				<td><?php echo $thisBlock; ?></td>
 				<td>
-					<select>
+					<select name="p<?php echo $thisBlock; ?>">
 					<?php 
 					if ( $placements['p'.$thisBlock] == $assemblyID ) 
 					{ ?>
@@ -108,7 +116,7 @@ if ( empty($_student) )
 						if ( $placements['p'.$thisBlock] == 0 )
 						{
 						?>
-						<option id="0" selected="selected" disabled="disabled">Select One</option> 
+						<option value="0" selected="selected" disabled="disabled">Select One</option> 
 						<?php
 						}
 						
@@ -118,7 +126,7 @@ if ( empty($_student) )
 							if ( !$full || $placements['p'.$thisBlock] == $career['id'] )
 							{
 						?>
-							<option id="<?php echo $career['id']; ?>" <?php if ( $career['id'] == $placements['p'.$thisBlock] ) echo "selected=\"selected\""; ?>><?php echo $career['name']; if ( $full ) echo " --FULL--"; ?></option>
+						<option value="<?php echo $career['id']; ?>" <?php if ( $career['id'] == $placements['p'.$thisBlock] ) echo "selected=\"selected\""; ?>><?php echo $career['name']; if ( $full ) echo " --FULL--"; ?></option>
 						<?php
 							}
 						}
@@ -130,8 +138,10 @@ if ( empty($_student) )
 			<?php
 			}
 			?>
-			
 		</table>
+		<br>
+		<input type="submit" name="submit" value="Submit">
+	</form>
 	</center>
 	</body>
 </html>

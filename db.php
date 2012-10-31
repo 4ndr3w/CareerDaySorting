@@ -144,7 +144,7 @@ class Database
 		return $this->genaricRemove("selections", $id);
 	}
 	
-	function setStudentPlacement($id, $p1, $p2, $p3, $p3)
+	function setStudentPlacement($id, $p1, $p2, $p3)
 	{
 		if ( ($id = intval($id)) == 0 )
 			return false;
@@ -155,10 +155,29 @@ class Database
 			return false;
 		if ( ($p3 = intval($p3)) == 0 )
 			return false;
-		if ( ($p4 = intval($p4)) == 0 )
+			
+		return mysql_query("INSERT INTO `placements` (id, p1,p2,p3) VALUES (".$id.", ".$p1.", ".$p2.", ".$p3.")");	
+	}
+	
+	function updateStudentPlacement($id, $p1, $p2, $p3)
+	{
+		if ( ($id = intval($id)) == 0 )
 			return false;
 			
-		return mysql_query("INSERT INTO `placements` (id, p1,p2,p3,p4) VALUES (".$id.", ".$p1.", ".$p2.", ".$p3.", ".$p4.")");	
+		if ( ($p1 = intval($p1)) == 0 )
+			return false;
+		if ( ($p2 = intval($p2)) == 0 )
+			return false;
+		if ( ($p3 = intval($p3)) == 0 )
+			return false;
+		
+		if ( !mysql_query("UPDATE `placements` SET `p1` = ".$p1." WHERE `id` = ".$id) )
+			return false;
+		if ( !mysql_query("UPDATE `placements` SET `p2` = ".$p2." WHERE `id` = ".$id) )
+			return false;
+		if ( !mysql_query("UPDATE `placements` SET `p3` = ".$p3." WHERE `id` = ".$id) )
+			return false;
+		return true;
 	}
 	
 	function getStudentPlacement($id)
