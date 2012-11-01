@@ -1,5 +1,5 @@
 <?php
-require_once "db.php";
+require_once "../db.php";
 $startTime = microtime(true);
 $itsRan = 0;
 function uniqueIteration($a, $b, $c)

@@ -1,5 +1,5 @@
 <?php
-require_once "db.php";
+require_once "../db.php";
 
 if ( array_key_exists("id", $_POST) )
 	$database->updateStudentPlacement($_POST['id'], $_POST['p1'], $_POST['p2'], $_POST['p3']);

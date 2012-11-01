@@ -1,5 +1,5 @@
 <?php
-require_once "db.php";
+require_once "../db.php";
 if ( array_key_exists("submit", $_POST) )
 {
 	$database->removeStudent($_POST['id']);

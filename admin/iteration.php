@@ -1,5 +1,5 @@
 <?php
-require_once "db.php";
+require_once "../db.php";
 
 function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, &$itsRan, $isChoice = true)
 {
