@@ -261,6 +261,11 @@ class Database
 		return $this->genaricGetSet("statistics");
 	}
 	
+	function hasStatistics()
+	{
+		return mysql_num_rows(mysql_query("SELECT * FROM `statistics`")) != 0;
+	}
+	
 	function resetStatistics()
 	{
 		mysql_query("DELETE FROM `statistics`");

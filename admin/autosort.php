@@ -307,7 +307,7 @@ foreach ( $students as $student )
 }
 
 
-echo "--------------------\n";
+echo "--------------------<br>\n";
 $stats = array("success"=>0, "failed"=>0, "total"=>0);
 mysql_query("DELETE FROM `placements`");
 foreach ( $students as $student )
@@ -326,7 +326,7 @@ foreach ( $students as $student )
 	}
 }
 
-echo "Statistics:\n";
+echo "Statistics:<br>\n";
 
 $database->resetStatistics();
 
@@ -340,7 +340,9 @@ $database->addStatistic("Time to complete", round((microtime(true)-$startTime), 
 $stats = $database->getStatistics();
 foreach ( $stats as $stat )
 {
-	echo $stat['name']." - ".$stat['value']."\n";
+	echo $stat['name']." - ".$stat['value']."<br>\n";
 }
 echo "--------------------\n";
 ?>
+<br>
+<a href="index.php">Back</a>
