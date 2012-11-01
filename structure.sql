@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.1.44)
 # Database: careerday
-# Generation Time: 2012-10-23 17:23:56 +0000
+# Generation Time: 2012-11-01 18:19:47 +0000
 # ************************************************************
 
 
@@ -31,6 +31,7 @@ CREATE TABLE `careers` (
   `location` text NOT NULL,
   `maxStudents` int(11) NOT NULL,
   `group` int(11) NOT NULL,
+  `hidden` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
