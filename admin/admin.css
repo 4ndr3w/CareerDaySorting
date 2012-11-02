@@ -1,0 +1,33 @@
+table
+{
+	margin:auto;
+}
+
+.centered
+{
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	display:block;
+}
+
+.columnHeader
+{
+	font-weight:bold;
+	text-align:center;
+	display:block;
+}
+
+.tableInput
+{
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	display:block;
+	width: 90%;
+}
+
+.bolded
+{
+	font-weight: bold;
+}

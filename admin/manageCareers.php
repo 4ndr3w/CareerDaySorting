@@ -15,45 +15,48 @@ switch ($_POST['action'])
 
 $careers = $database->getCareers();
 ?>
+<!DOCTYPE html>
 <html>
-<head>
-	<title>Manage Careers</title>
-</head>
-<body>
-	<table id="info" border="1">
+	<head>
+		<title>Manage Careers</title>
+		<link rel="stylesheet" href="admin.css">
+	</head>
+	
+	<body>
+		<table class="centered" id="info" border="1">
+			<tr>
+				<td><span class="columnHeader">Name</span></td>
+				<td><span class="columnHeader">Location</span></td>
+				<td><span class="columnHeader">Limit</span></td>
+				<td><span class="columnHeader">Actions</span></td>
+			</tr>
+	<?php
+	foreach ( $careers as $career )
+	{
+	?>
 		<tr>
-			<td><center><strong>Name</strong></center></td>
-			<td><center><strong>Location</strong></center></td>
-			<td><center><strong>Limit</strong></center></td>
-			<td><center><strong>Actions</strong></center></td>
+			<form action="" method="post">
+				<input type="hidden" name="action" value="del">
+				<input type="hidden" name="id" value="<?php echo $career['id']; ?>">
+				<td><?php echo $career['name']; ?></td>
+				<td><?php echo $career['location']; ?></td>
+				<td><?php echo $career['maxStudents']; ?></td>
+				<td><input type="submit" value="Delete" class="tableInput"></td>
+			</form>
 		</tr>
-<?php
-foreach ( $careers as $career )
-{
-?>
-	<tr>
-		<form action="" method="post">
-			<input type="hidden" name="action" value="del">
-			<input type="hidden" name="id" value="<?php echo $career['id']; ?>">
-			<td><?php echo $career['name']; ?></td>
-			<td><?php echo $career['location']; ?></td>
-			<td><?php echo $career['maxStudents']; ?></td>
-			<td><input type="submit" value="Delete"></td>
-		</form>
-	</tr>
-<?php
-}
-?>
-	<tr>
-		<form action="" method="post">
-			<input type="hidden" name="action" value="add">
-			<input type="hidden" name="id" value="<?php echo $career['id']; ?>">
-			<td><input type="text" name="name"></td>
-			<td><input type="text" name="location"></td>
-			<td><input type="text" name="maxStudents"></td>
-			<td><center><input type="submit" value="Add"></center></td>
-		</form>
-	</tr>
-</table>
-</body>
+	<?php
+	}
+	?>
+		<tr>
+			<form action="" method="post">
+				<input type="hidden" name="action" value="add">
+				<input type="hidden" name="id" value="<?php echo $career['id']; ?>">
+				<td><input type="text" name="name" class="tableInput"></td>
+				<td><input type="text" name="location" class="tableInput"></td>
+				<td><input type="text" name="maxStudents" class="tableInput"></td>
+				<td><input type="submit" value="Add" class="tableInput"></td>
+			</form>
+		</tr>
+	</table>
+	</body>
 </html>
