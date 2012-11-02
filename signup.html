@@ -27,15 +27,17 @@
 				if(document.getElementById("f"+i).value != "" && document.getElementById("f"+i).value != 0){
 					process = process + (100/9);
 					bar = bar + (860/9);
-				}	
+				}
+				if(bar < 870)
+					$("#submitarea").slideUp();
 			}
-			$("#precent").html(process);
+			$("#precent").html(Math.floor(process));
 			$("#InBar").animate({
 				width: bar + "px"},
 				1000,
 				function(){
 					if(bar > 870)
-					$("#submitarea").slideDown();
+						$("#submitarea").slideDown();
 				}
 			);
 			
