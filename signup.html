@@ -19,6 +19,21 @@
 			$("#sect-"+form).fadeIn();
 		}
 		
+		function choicesAreUnique()
+		{
+			for ( a = 5; a <= 8; a++ )
+			{
+				aVal = document.getElementById("f"+a).value;
+				for ( b = 5; b <= 8; b++ )
+				{
+					bVal = document.getElementById("f"+b).value;
+					if ( a != b && aVal == bVal )
+						return false;
+				}
+			}
+			return true;
+		}
+
 		function update(num){
 			if ( num >= 5 && num <= 8 ) // Career lists
 			{
@@ -43,7 +58,10 @@
 				1000,
 				function(){
 					if(bar > 870){
-						$("#submitarea").slideDown();
+						if ( choicesAreUnique() )
+							$("#submitarea").slideDown();
+						else
+							$("#submitarea").slideUp();
 					}
 				}
 			);
@@ -103,21 +121,33 @@
 						<select id="f5" onchange="update(5)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="1">Farmer</option>
+							<option value="2">Sysadmin</option>
+							<option value="3">Programmer</option>
+							<option value="4">Garbage Man</option>
 						</select><br>
 						Choice 2:
 						<select id="f6" onchange="update(6)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="1">Farmer</option>
+							<option value="2">Sysadmin</option>
+							<option value="3">Programmer</option>
+							<option value="4">Garbage Man</option>
 						</select><br>
 						Choice 3: 
 						<select id="f7" onchange="update(7)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="1">Farmer</option>
+							<option value="2">Sysadmin</option>
+							<option value="3">Programmer</option>
+							<option value="4">Garbage Man</option>
 						</select><br>
 						Choice 4:
 						<select id="f8" onchange="update(8)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="1">Farmer</option>
+							<option value="2">Sysadmin</option>
+							<option value="3">Programmer</option>
+							<option value="4">Garbage Man</option>
 						</select><br>
 						<button id="prev" type="button" onclick="showForm(0)" value="Prev">Prev</button>
 					</div>
