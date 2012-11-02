@@ -20,7 +20,14 @@
 		}
 		
 		function update(num){
-			document.getElementById("c"+num).innerHTML = document.getElementById("f"+num).value;
+			if ( num >= 5 && num <= 8 ) // Career lists
+			{
+				var careerList = document.getElementById("f5").options;
+				document.getElementById("c"+num).innerHTML = careerList[document.getElementById("f"+num).value].text;
+			}
+			else // Normal Fields
+				document.getElementById("c"+num).innerHTML = document.getElementById("f"+num).value;
+
 			var process = 0;
 			bar = 20;
 			for(i=0;i<9;i++){
