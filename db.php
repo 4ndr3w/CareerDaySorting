@@ -66,9 +66,24 @@ class Database
 		return $this->genaricGet("careers", $id);
 	}
 	
-	function getCareers()
+	function getCareers($includeHidden = true)
 	{
-		return $this->genaricGetSet("careers", true);
+		$result = 0;
+		if ( $includeHidden )
+			$result = mysql_query("SELECT * FROM careers");
+		else
+			$result = mysql_query("SELECT * FROM careers WHERE `hidden` = 0");
+		
+		$output = array();
+		while ( $d = mysql_fetch_array($result, MYSQL_ASSOC) )
+		{
+			if ( $idAsKey && !empty($d) )
+				$output[$d['id']] = $d;
+			else if ( !empty($d) )
+				$output[] = $d;
+		}
+		return $output;
+		
 	}
 	
 	function getGroupForCareer($id)

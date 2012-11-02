@@ -20,7 +20,7 @@ if ( array_key_exists("submit", $_POST) )
 	}
 }
 
-$careers = $db->getCareers();
+$careers = $db->getCareers(false);
 
 
 if ( !empty($notice) )
