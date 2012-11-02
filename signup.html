@@ -5,6 +5,7 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="main.css">
 		<script src="jquery.js"></script>
+		<script src="keyValidator.js"></script>
 		<script>
 		var form = 0;
 		
@@ -20,17 +21,29 @@
 		
 		function update(num){
 			document.getElementById("c"+num).innerHTML = document.getElementById("f"+num).value;
-			process = 0;
+			var process = 0;
+			bar = 20;
 			for(i=0;i<9;i++){
-				if(document.getElementById("f"+i).value != "" && document.getElementById("f"+i).value != 0)
-				process = process + 12.5;
+				if(document.getElementById("f"+i).value != "" && document.getElementById("f"+i).value != 0){
+					process = process + (100/9);
+					bar = bar + (860/9);
+				}	
 			}
 			$("#precent").html(process);
+			$("#InBar").animate({
+				width: bar + "px"},
+				1000,
+				function(){
+					if(bar > 870)
+					$("#submitarea").slideDown();
+				}
+			);
+			
 		}
 		
 		function changeform(direction){// 1++ 0-- 
 			update(form);
-			(direction == 1? (form<8? form++:form=0 ) : (form>0? form--:form=8) );
+			(direction == 1 ? (form<8? form++:form=0 ) : (form>0? form--:form=8) );
 			showForm(form);
 		}
 		</script>
@@ -40,71 +53,94 @@
 			<section id="header">
 				<h1>Career Day</h1>
 			</section>
-			<section id="process">
-				Process: <span id="precent">0</span> % complete. 
-			</section>
-			<section id="conformation">
-				Student ID #: <span id="c0"></span><br>
-				First Name: <span id="c1"></span><br>
-				Last Name: <span id="c2"></span><br>
-				Homeroom #: <span id="c3"></span><br>
-				Grade: <span id="c4"></span><br>
-				Choice 1: <span id="c5"></span><br>
-				Choice 2: <span id="c6"></span><br>
-				Choice 3: <span id="c7"></span><br>
-				Choice 4: <span id="c8"></span><br>
-			</section>
-			<section id="formarea">
-				<div id="sect-0" class="sect">
-					Student ID #: <input type="text" id="f0">
+			<div id="content">
+				<section id="process">
+					Process: <span id="precent">0</span>% complete.
+					<div id="ExBar">
+						<div id="InBar"></div>
+					</div>
+					<div id="submitarea">
+						Click here to submit: <button id="submit" type="button">Submit</button>
+					</div>
+				</section>
+				<section id="conformation">
+					<a onclick="">Student ID #: <span id="c0"></span><br></a>
+					<a onclick="">First Name: <span id="c1"></span><br></a>
+					<a onclick="">Last Name: <span id="c2"></span><br></a>
+					<a onclick="">Homeroom #: <span id="c3"></span><br></a>						
+					<a onclick="">Grade: <span id="c4"></span><br></a>
+					<a onclick="">Choice 1: <span id="c5"></span><br></a>
+					<a onclick="">Choice 2: <span id="c6"></span><br></a>
+					<a onclick="">Choice 3: <span id="c7"></span><br></a>
+					<a onclick="">Choice 4: <span id="c8"></span><br></a>
+				</section>
+				<section id="formarea">
+					<div id="sect-0" class="sect">
+						<h2>Enter your Student ID number</h2>
+						Student ID #: <input type="text" id="f0" onkeypress="return validateKeypress(event,2,6)">
+					</div>
+					<div id="sect-1" class="sect">
+						<h2>Enter your first name</h2>
+						First Name: <input type="text" id="f1" onkeypress="return validateKeypress(event,1,999)">
+					</div>
+					<div id="sect-2" class="sect">
+						<h2>Enter your last name</h2>
+						Last Name: <input type="text" id="f2" onkeypress="return validateKeypress(event,1,999)">
+					</div>
+					<div id="sect-3" class="sect">
+						<h2>Enter your Homeroom number</h2>
+						Homeroom #: <input type="text" id="f3" onkeypress="return validateKeypress(event,2,3)">
+					</div>
+					<div id="sect-4" class="sect">
+						<h2>Select your grade</h2>
+						Grade:
+						<select id="f4">
+							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
+							<option value="9">Freshman (9)</option>
+							<option value="10">Sophomore (10)</option>
+							<option value="11">Junior (11)</option>
+							<option value="12">Senior (12)</option>
+						</select>	
+					</div>
+					<div id="sect-5" class="sect">
+						<h2>Select your first Career Day choice</h2>
+						Choice 1: 
+						<select id="f5">
+							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
+							<option value="1">Farmer</option>
+						</select>
+					</div>
+					<div id="sect-6" class="sect">
+						<h2>Select your second Career Day choice</h2>
+						Choice 2:
+						<select id="f6">
+							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
+							<option value="1">Farmer</option>
+						</select>
+					</div>
+					<div id="sect-7" class="sect">
+						<h2>Select your third Career Day choice</h2>
+						Choice 3: 
+						<select id="f7">
+							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
+							<option value="1">Farmer</option>
+						</select>
+						</div>
+						<div id="sect-8" class="sect">
+							<h2>Select your forth Career Day choice</h2>
+							Choice 4:
+							<select id="f8">
+								<option value="0" selected="selected" disabled="disabled">-Select One-</option>
+								<option value="1">Farmer</option>
+							</select>
+						</div>
+						<button id="prev" type="button" onclick="changeform(0)" value="Prev">Prev</button>
+						<button id="next" type="button" onclick="changeform(1)" value="Next">Next</button>
+					</section>
+				
+				
 				</div>
-				<div id="sect-1" class="sect">
-					First Name: <input type="text" id="f1">
-				</div>
-				<div id="sect-2" class="sect">
-					Last Name: <input type="text" id="f2">
-				</div>
-				<div id="sect-3" class="sect">
-					Homeroom #: <input type="text" id="f3">
-				</div>
-				<div id="sect-4" class="sect">
-					Grade:
-					<select id="f4">
-						<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-						<option value="9">Freshman (9)</option>
-						<option value="10">Sophomore (10)</option>
-						<option value="11">Junior (11)</option>
-						<option value="12">Senior (12)</option>
-					</select>
-					
-				</div>
-				<div id="sect-5" class="sect">
-					Choice 1: 
-					<select id="f5">
-						<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-					</select>
-				</div>
-				<div id="sect-6" class="sect">
-					Choice 2:
-					<select id="f6">
-						<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-					</select>
-				</div>
-				<div id="sect-7" class="sect">
-					Choice 3: 
-					<select id="f7">
-						<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-					</select>
-				</div>
-				<div id="sect-8" class="sect">
-					Choice 4:
-					<select id="f8">
-						<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-					</select>
-				</div>
-				<button id="prev" type="button" onclick="changeform(0)" value="Prev">Prev</button>
-				<button id="next" type="button" onclick="changeform(1)" value="Next">Next</button>
-			</section>
+			</div>
 			<section id="footer"></section>
 		</div>
 	</body>
