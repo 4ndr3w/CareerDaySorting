@@ -28,25 +28,24 @@
 					process = process + (100/9);
 					bar = bar + (860/9);
 				}
-				if(bar < 870)
-					$("#submitarea").slideUp();
 			}
+			
 			$("#precent").html(Math.floor(process));
 			$("#InBar").animate({
 				width: bar + "px"},
 				1000,
 				function(){
-					if(bar > 870)
+					if(bar > 870){
 						$("#submitarea").slideDown();
+					}
 				}
 			);
-			
 		}
 		
-		function changeform(direction){// 1++ 0-- 
-			update(form);
-			(direction == 1 ? (form<8? form++:form=0 ) : (form>0? form--:form=8) );
-			showForm(form);
+		function seniorCheck(){
+			update(4);
+			if(document.getElementById("f4").value == 12)
+				alert("you are a senior!!!");
 		}
 		</script>
 	</head>
@@ -78,70 +77,45 @@
 				</section>
 				<section id="formarea">
 					<div id="sect-0" class="sect">
-						<h2>Enter your Student ID number</h2>
-						Student ID #: <input type="text" id="f0" onkeypress="return validateKeypress(event,2,6)">
-					</div>
-					<div id="sect-1" class="sect">
-						<h2>Enter your first name</h2>
-						First Name: <input type="text" id="f1" onkeypress="return validateKeypress(event,1,999)">
-					</div>
-					<div id="sect-2" class="sect">
-						<h2>Enter your last name</h2>
-						Last Name: <input type="text" id="f2" onkeypress="return validateKeypress(event,1,999)">
-					</div>
-					<div id="sect-3" class="sect">
-						<h2>Enter your Homeroom number</h2>
-						Homeroom #: <input type="text" id="f3" onkeypress="return validateKeypress(event,2,3)">
-					</div>
-					<div id="sect-4" class="sect">
-						<h2>Select your grade</h2>
+						Student ID #: <input type="text" id="f0" onblur="update(0)" onkeypress="return validateKeypress(event,2,6)"><br>
+						First Name: <input type="text" id="f1" onblur="update(1)" onkeypress="return validateKeypress(event,1,999)"><br>
+						Last Name: <input type="text" id="f2" onblur="update(2)" onkeypress="return validateKeypress(event,1,999)"><br>
+						Homeroom #: <input type="text" id="f3" onblur="update(3)" onkeypress="return validateKeypress(event,2,3)"><br>
 						Grade:
-						<select id="f4">
+						<select id="f4" onchange="seniorCheck()">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="9">Freshman (9)</option>
 							<option value="10">Sophomore (10)</option>
 							<option value="11">Junior (11)</option>
 							<option value="12">Senior (12)</option>
-						</select>	
+						</select><br>
+						<button id="next" type="button" onclick="showForm(1)" value="Next">Next</button>
 					</div>
-					<div id="sect-5" class="sect">
-						<h2>Select your first Career Day choice</h2>
+					<div id="sect-1" class="sect">
 						Choice 1: 
-						<select id="f5">
+						<select id="f5" onchange="update(5)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="1">Farmer</option>
-						</select>
-					</div>
-					<div id="sect-6" class="sect">
-						<h2>Select your second Career Day choice</h2>
+						</select><br>
 						Choice 2:
-						<select id="f6">
+						<select id="f6" onchange="update(6)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="1">Farmer</option>
-						</select>
-					</div>
-					<div id="sect-7" class="sect">
-						<h2>Select your third Career Day choice</h2>
+						</select><br>
 						Choice 3: 
-						<select id="f7">
+						<select id="f7" onchange="update(7)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="1">Farmer</option>
-						</select>
-						</div>
-						<div id="sect-8" class="sect">
-							<h2>Select your forth Career Day choice</h2>
-							Choice 4:
-							<select id="f8">
-								<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-								<option value="1">Farmer</option>
-							</select>
-						</div>
-						<button id="prev" type="button" onclick="changeform(0)" value="Prev">Prev</button>
-						<button id="next" type="button" onclick="changeform(1)" value="Next">Next</button>
-					</section>
-				
-				
-				</div>
+						</select><br>
+						Choice 4:
+						<select id="f8" onchange="update(8)">
+							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
+							<option value="1">Farmer</option>
+						</select><br>
+						<button id="prev" type="button" onclick="showForm(0)" value="Prev">Prev</button>
+					</div>
+					
+				</section>	
 			</div>
 			<section id="footer"></section>
 		</div>

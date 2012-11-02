@@ -14,6 +14,8 @@ function validateKeypress(e,type,length)
 			matchExpression = /\d/;
 			break;
 	}
+	if(e.keyCode == 13)
+	e.srcElement.blur();
 	return matchExpression.test(String.fromCharCode(e.keyCode)) && (e.srcElement.value.length < length);
 }
 
