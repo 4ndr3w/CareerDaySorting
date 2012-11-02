@@ -1,4 +1,20 @@
 <?php
+
+if ( !array_key_exists("run", $_POST) )
+{
+?>
+	<form action="" method="post">
+		Running an automatic sort will overwrite any existing placement data.<br>
+		Confirm: <input type="submit" name="run" value="Run">
+	</form>
+<?php
+	die();
+}
+
+
+
+
+
 require_once "../db.php";
 $startTime = microtime(true);
 $itsRan = 0;
