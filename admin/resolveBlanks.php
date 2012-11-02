@@ -32,7 +32,7 @@ foreach ( $students as $_student )
 }
 
 if ( empty($student) )
-	die("All students have been successfuly sorted");
+	die("All students have been successfuly sorted<br>\n<a href=\"index.php\">Back</a>");
 
 
 ?>
