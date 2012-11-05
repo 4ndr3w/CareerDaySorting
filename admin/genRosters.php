@@ -5,80 +5,70 @@ $careers = $database->getCareers();
 ?>
 
 <html>
-<head>
-<title>Rosters</title>
-<style type="text/css">
-.schedule
-{
-	page-break-inside:avoid;
-}
-.title
-{
-	text-align: center;
-}
-</style>
+	<head>
+		<title>Rosters</title>
+		<link rel="stylesheet" href="admin.css">
+	</head>
 
-</head>
-
-<body>
-<center>
-<?php
-foreach ( $careers as $career )
-{
-	if ( $career['id'] != $assemblyID )
+	<body>
+	<center>
+	<?php
+	foreach ( $careers as $career )
 	{
-		for ( $i = 0; $i < 3; $i++ )
+		if ( $career['id'] != $assemblyID )
 		{
-			$students = $database->getStudentsIn($career['id'], $i);
-			?>
-			<table class="schedule" border="1">
-			<tr>
-				<td colspan="100%" class="title"><?php echo "<strong>".$career['name']." - Block ".($i+1)."</strong><br>\n"; ?></td>
-			</tr>
-			
-			<tr>
-				<td><strong>ID</strong></td>
-				<td><strong>Name</strong></td>
-			</tr>
-			<?php
-			foreach ($students as $student)
+			for ( $i = 0; $i < 3; $i++ )
 			{
-				$studentInfo = $database->getStudent($student['id']);
-			?>
-			<tr>
-				<td><?php echo $studentInfo['id']; ?></td>
-				<td><?php echo $studentInfo['first']." ".$studentInfo['last']; ?></td>
-			</tr>
+				$students = $database->getStudentsIn($career['id'], $i);
+				?>
+				<table class="schedule" border="1">
+				<tr>
+					<td colspan="100%" class="title"><?php echo "<strong>".$career['name']." - Block ".($i+1)."</strong><br>\n"; ?></td>
+				</tr>
+			
+				<tr>
+					<td><strong>ID</strong></td>
+					<td><strong>Name</strong></td>
+				</tr>
+				<?php
+				foreach ($students as $student)
+				{
+					$studentInfo = $database->getStudent($student['id']);
+				?>
+				<tr>
+					<td><?php echo $studentInfo['id']; ?></td>
+					<td><?php echo $studentInfo['first']." ".$studentInfo['last']; ?></td>
+				</tr>
+				<?php
+				}
+				?>
+				</table>
+				<br><br>
 			<?php
 			}
-			?>
-			</table>
-			<br><br>
+		}
+
+	}
+	?>
+
+	<table class="schedule" border="1">
+		<tr>
+			<td colspan="100%" class="title"><strong>Sorting Statistics</strong></td>
+		</tr>
+	
+		<?php
+		$stats = $database->getStatistics();
+		foreach ( $stats as $stat )
+		{
+		?>
+		<tr>
+			<td><?php echo $stat['name']; ?></td>
+			<td><?php echo $stat['value']; ?></td>
+		</td>
 		<?php
 		}
-	}
-
-}
-?>
-
-<table class="schedule" border="1">
-	<tr>
-		<td colspan="100%" class="title"><strong>Sorting Statistics</strong></td>
-	</tr>
-	
-	<?php
-	$stats = $database->getStatistics();
-	foreach ( $stats as $stat )
-	{
-	?>
-	<tr>
-		<td><?php echo $stat['name']; ?></td>
-		<td><?php echo $stat['value']; ?></td>
-	</td>
-	<?php
-	}
-	?>
-</table>
-</center>
+		?>
+	</table>
+	</center>
 </body>
 </html>

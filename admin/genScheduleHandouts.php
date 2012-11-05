@@ -14,14 +14,8 @@ array_multisort($pivot, SORT_DESC, $students);
 
 <html>
 <head>
-<title>Schedule Handouts</title>
-<style type="text/css">
-.schedule
-{
-	page-break-inside:avoid;
-}
-</style>
-
+	<title>Schedule Handouts</title>
+	<link rel="stylesheet" href="admin.css">
 </head>
 
 <body>
