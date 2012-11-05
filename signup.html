@@ -44,9 +44,15 @@
 				document.getElementById("c"+num).innerHTML = document.getElementById("f"+num).value;
 
 			var process = 0;
-			bar = 20;
+			var bar = 20;
+			var isOptOut = document.getElementById("optOutButton").checked;
 			for(i=0;i<9;i++){
-				if(document.getElementById("f"+i).value != "" && document.getElementById("f"+i).value != 0){
+				if ( isOptOut && i >= 5 && i <= 8 )
+				{
+					process = process + (100/9);
+					bar = bar + (860/9);
+				}
+				else if(document.getElementById("f"+i).value != "" && document.getElementById("f"+i).value != 0){
 					process = process + (100/9);
 					bar = bar + (860/9);
 				}
@@ -69,8 +75,77 @@
 		
 		function seniorCheck(){
 			update(4);
-			if(document.getElementById("f4").value == 12)
-				alert("you are a senior!!!");
+			if(document.getElementById("f4").value == 12) // Senior Selected
+				document.getElementById("optOutButton").disabled = false;
+			else
+			{
+				document.getElementById("optOutButton").disabled = true;
+				document.getElementById("optInButton").checked = true;
+				document.getElementById("optOutButton").checked = false;
+				disabledChoicesCheck();
+			}
+		}
+		
+		function disabledChoicesCheck()
+		{
+			update(0);
+			state = document.getElementById("optOutButton").checked;
+			var careerList = document.getElementById("f5").options;
+			for ( i = 5; i <= 8; i++ )
+			{
+				document.getElementById("f"+i).disabled = state;
+				
+				if ( state )
+				{
+					document.getElementById("c"+i).innerHTML = "N/A";
+				}
+				else
+				{
+					careerID = document.getElementById("f"+i).value;
+					document.getElementById("c"+i).innerHTML = (careerID==0 ? "" : careerList[careerID].text);
+				}
+			}
+		}
+		
+		function submitToServer()
+		{
+			_id = document.getElementById("f0").value;
+			_first = document.getElementById("f1").value;
+			_last = document.getElementById("f2").value;
+			_homeroom = document.getElementById("f3").value;
+			_grade = document.getElementById("f4").value;
+			dataToSend = "";
+			if ( _grade == 12 && document.getElementById("optOutButton").checked )
+			{
+				dataToSend = {id: _id, first: _first, last: _last, homeroom: _homeroom, grade:_grade, isSeniorOptOut:true};
+			}
+			else
+			{
+				_c1 = document.getElementById("f5").value;
+				_c2 = document.getElementById("f6").value;
+				_c3 = document.getElementById("f7").value;
+				_c4 = document.getElementById("f8").value;
+				dataToSend = {id: _id, first: _first, last: _last, homeroom: _homeroom, grade:_grade, c1: _c1, c2: _c2, c3: _c3, c4: _c4, isSeniorOptOut:false};
+			}
+			
+			$.ajax({
+				type: "POST",
+				url: "signupHandler.php",
+				data: dataToSend,
+				success: function (data)
+				{
+					if ( data == "fail" )
+					{
+						alert("Please make sure that all of the information you have entered is valid.\n");
+					}
+					else
+					{
+						alert("Thank you! Your choices have been recorded.\n");
+						window.location.reload();
+					}
+				}
+			});
+			
 		}
 		</script>
 	</head>
@@ -86,7 +161,7 @@
 						<div id="InBar"></div>
 					</div>
 					<div id="submitarea">
-						Click here to submit: <button id="submit" type="button">Submit</button>
+						Click here to submit: <button id="submit" type="button" onClick="submitToServer()">Submit</button>
 					</div>
 				</section>
 				<section id="conformation">
@@ -117,7 +192,9 @@
 						<button id="next" type="button" onclick="showForm(1)" value="Next">Next</button>
 					</div>
 					<div id="sect-1" class="sect">
-						Choice 1: 
+						<input type="radio" id="optOutButton" name="seniorOptOut" value="1" disabled="disabled" onChange="disabledChoicesCheck()">I am going to career shadow or attend a college visit.</input><br><br>
+						<input type="radio" id="optInButton" name="seniorOptOut" value="0" checked="checked" onChange="disabledChoicesCheck()">I am going to participate in career day.</input><br>
+						Choice 1:
 						<select id="f5" onchange="update(5)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<option value="1">Farmer</option>

@@ -8,6 +8,7 @@ $databaseInfo = array(
 	"database" => "careerday");
 
 $assemblyID = 99;
+$seniorOptOutID = 98;
 
 session_start();
 ?>

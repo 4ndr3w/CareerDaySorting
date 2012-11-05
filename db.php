@@ -202,7 +202,7 @@ class Database
 	
 	function clearStudentPlacement($id)
 	{
-		return $this->genaricGet("placements", $id);
+		return $this->genaricRemove("placements", $id);
 	}
 	
 	function addStudent($id, $first, $last, $grade, $homeroom)
