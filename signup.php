@@ -68,7 +68,7 @@ $careers = $database->getCareers(false);
 				1000,
 				function(){
 					if(bar > 870){
-						if ( choicesAreUnique() )
+						if ( choicesAreUnique() || document.getElementById("optOutButton").checked )
 							$("#submitarea").slideDown();
 						else
 							$("#submitarea").slideUp();
