@@ -67,12 +67,10 @@ $careers = $database->getCareers(false);
 				width: bar + "px"},
 				1000,
 				function(){
-					if(bar > 870){
-						if ( choicesAreUnique() || document.getElementById("optOutButton").checked )
-							$("#submitarea").slideDown();
-						else
-							$("#submitarea").slideUp();
-					}
+					if(bar > 870 && (choicesAreUnique() || document.getElementById("optOutButton").checked) )
+						$("#submitarea").slideDown();
+					else
+						$("#submitarea").slideUp();
 				}
 			);
 		}
