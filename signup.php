@@ -1,3 +1,7 @@
+<?php
+require_once "db.php";
+$careers = $database->getCareers(false);
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -197,34 +201,42 @@
 						Choice 1:
 						<select id="f5" onchange="update(5)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-							<option value="1">Farmer</option>
-							<option value="2">Sysadmin</option>
-							<option value="3">Programmer</option>
-							<option value="4">Garbage Man</option>
+							<?php 
+							foreach ( $careers as $career )
+							{
+								echo "<option value=\"".$career['id']."\">".$career['name']."</option>";
+							}
+							?>
 						</select><br>
 						Choice 2:
 						<select id="f6" onchange="update(6)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-							<option value="1">Farmer</option>
-							<option value="2">Sysadmin</option>
-							<option value="3">Programmer</option>
-							<option value="4">Garbage Man</option>
+							<?php 
+							foreach ( $careers as $career )
+							{
+								echo "<option value=\"".$career['id']."\">".$career['name']."</option>";
+							}
+							?>
 						</select><br>
 						Choice 3: 
 						<select id="f7" onchange="update(7)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-							<option value="1">Farmer</option>
-							<option value="2">Sysadmin</option>
-							<option value="3">Programmer</option>
-							<option value="4">Garbage Man</option>
+							<?php 
+							foreach ( $careers as $career )
+							{
+								echo "<option value=\"".$career['id']."\">".$career['name']."</option>";
+							}
+							?>
 						</select><br>
 						Choice 4:
 						<select id="f8" onchange="update(8)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
-							<option value="1">Farmer</option>
-							<option value="2">Sysadmin</option>
-							<option value="3">Programmer</option>
-							<option value="4">Garbage Man</option>
+							<?php 
+							foreach ( $careers as $career )
+							{
+								echo "<option value=\"".$career['id']."\">".$career['name']."</option>";
+							}
+							?>
 						</select><br>
 						<button id="prev" type="button" onclick="showForm(0)" value="Prev">Prev</button>
 					</div>
