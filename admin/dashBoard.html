@@ -17,10 +17,11 @@
 			})
 		};
 
-		function sendData(file,data,done){
+		function sendData(file,send,done){
 			$.ajax({
 				type:"POST",
 				url:file,
+				data:send,
 				success:done								
 			});
 		}
