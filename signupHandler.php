@@ -9,7 +9,10 @@ if ( $database->addStudent($_POST['id'], $_POST['first'], $_POST['last'], $_POST
 			die("fail");
 	}
 	else if ( !$database->setStudentChoices($_POST['id'], $_POST['c1'], $_POST['c2'], $_POST['c3'], $_POST['c4']) )
+	{
+		$student->resetStudent($_POST['id']);
 		die("fail");
+	}
 }
 else
 	die("fail");
