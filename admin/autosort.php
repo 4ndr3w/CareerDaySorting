@@ -3,7 +3,7 @@
 if ( !array_key_exists("run", $_POST) )
 {
 ?>
-	<form action="" method="post">
+	<form action="" method="post" onsubmit="runAutosort()">
 		Running an automatic sort will overwrite any existing placement data.<br>
 		Confirm: <input type="submit" name="run" value="Run">
 	</form>

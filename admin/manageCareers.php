@@ -15,14 +15,7 @@ switch ($_POST['action'])
 
 $careers = $database->getCareers();
 ?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Manage Careers</title>
-		<link rel="stylesheet" href="admin.css">
-	</head>
-	
-	<body>
+
 		<table class="centered" id="info" border="1">
 			<tr>
 				<td><span class="columnHeader">Name</span></td>
@@ -58,5 +51,3 @@ $careers = $database->getCareers();
 			</form>
 		</tr>
 	</table>
-	</body>
-</html>

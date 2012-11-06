@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> Admin Dashboard </title>
+		<script src="../jquery.js"></script>
+		<script type="text/javascript">
+		function init(){
+			sendData("autosort.php","",function(data){
+				$("#autosort-inner").html(data);
+			});
+			sendData("manageCareers.php","",function(data){
+				$("#manageCareers-inner").html(data);
+			});
+			sendData("resetStudent.php","",function(data){
+				$("#resetStudent-inner").html(data);
+			})
+		};
+		
+		function sendData(file,data,done){
+			$.ajax({
+				type:"POST",
+				url:file,
+				success:done								
+			});
+		}
+		
+		function runAutosort(){
+			sendData("autosort.php","run=Run",function(data){
+				$("#autosort-inner").html(data);
+			});
+		}
+		
+		</script>
+	</head>
+	<body onload="init()">
+		<div id="container">
+			<section id="autosort">
+				<h2>Run Autosort</h2>
+				<div id="autosort-inner"></div>
+			</section>
+			
+			<section id="resolveBlacks">
+				
+			</section>
+			
+			<section id="manageCareers">
+				<h2>Manage Careers</h2>
+				<div id="manageCareers-inner"></div>
+			</section>
+			
+			<section id="resetStudent">
+				<h2>Reset Student</h2>
+				<div id="resetStudent-inner"></div>
+			</section>	
+		</div>
+	</body>
+</html>
