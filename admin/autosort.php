@@ -219,19 +219,29 @@ foreach ( $_careers as $career )
 foreach ( $_students as $student )
 {
 	$choices = $database->getStudentChoices($student['id']);
-	
-	$thisStudent = new Student($student['id'], $student['grade'], $choices['s1'], $choices['s2'], $choices['s3'], $choices['s4']);
-	switch ( $thisStudent->grade )
+	$placement = $database->getStudentPlacement($student['id']);
+	$thisStudent = 0;
+	if ( $placement['p1'] == $seniorOptOutID || $placement['p2'] == $seniorOptOutID || $placement['p3'] == $seniorOptOutID )
 	{
-		case 9:
-			$thisStudent->assignBlock(0, new Placement($assemblyID, 100, true));
-			break;
-		case 10:
-			$thisStudent->assignBlock(1, new Placement($assemblyID, 100, true));
-			break;
-		case 11:
-			$thisStudent->assignBlock(2, new Placement($assemblyID, 100, true));
-			break;
+		$thisStudent = new Student($student['id'], $student['grade'], $seniorOptOutID, $seniorOptOutID, $seniorOptOutID, $seniorOptOutID);
+		for ( $z = 0; $z < 3; $z++ )
+			$thisStudent->placements[i]->id = $seniorOptOutID;
+	}
+	else
+	{
+		$thisStudent = new Student($student['id'], $student['grade'], $choices['s1'], $choices['s2'], $choices['s3'], $choices['s4']);
+		switch ( $thisStudent->grade )
+		{
+			case 9:
+				$thisStudent->assignBlock(0, new Placement($assemblyID, 100, true));
+				break;
+			case 10:
+				$thisStudent->assignBlock(1, new Placement($assemblyID, 100, true));
+				break;
+			case 11:
+				$thisStudent->assignBlock(2, new Placement($assemblyID, 100, true));
+				break;
+		}
 	}
 	$students[$thisStudent->id] = $thisStudent;
 }
