@@ -15,8 +15,12 @@ require_once "../db.php";
 			<a href="manageCareers.php">careers</a>
 		<h2>Sort...</h2>
 			<a href="autosort.php">automaticly</a> - <a href="resolveBlanks.php">manually</a>
-			<br>
-			<br>
+		<h2>Schedule...</h2>
+			<a href="genScheduleHandouts.php">by student</a> - <a href="genScheduleHandouts.php">by career block</a>
+		<h2>Reset...</h2>
+			<a href="resetStudent.php">a student</a>			
+		<br>
+		<br>
 			<?php
 			if ( $database->hasStatistics() )
 			{
@@ -28,10 +32,7 @@ require_once "../db.php";
 				}
 			}
 			?>
-		<h2>Schedule...</h2>
-			<a href="genScheduleHandouts.php">by student</a> - <a href="genScheduleHandouts.php">by career block</a>
-		<h2>Reset...</h2>
-			<a href="resetStudent.php">a student</a>
+
 	</center>
 </body>
 </html>
