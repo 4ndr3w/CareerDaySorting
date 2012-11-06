@@ -225,7 +225,10 @@ foreach ( $_students as $student )
 	{
 		$thisStudent = new Student($student['id'], $student['grade'], $seniorOptOutID, $seniorOptOutID, $seniorOptOutID, $seniorOptOutID);
 		for ( $z = 0; $z < 3; $z++ )
-			$thisStudent->placements[i]->id = $seniorOptOutID;
+		{
+			$thisStudent->placements[$z]->id = $seniorOptOutID;
+			$thisStudent->placements[$z]->isStatic = true;
+		}
 	}
 	else
 	{
@@ -257,7 +260,7 @@ for ( $i = 0; $i < 4; $i++ )
 		{
 			if ( $student->grade == $currentSortingGrade )
 			{
-				$skip = false;
+				$skip = $student->isFullySorted();
 				$blocksFilled = 0;
 				for ( $z = 0; $z < 3; $z++ )
 				{
