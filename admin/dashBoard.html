@@ -6,13 +6,13 @@
 		<script src="../jquery.js"></script>
 		<script type="text/javascript">
 		function init(){
-			sendData("autosort.php","",function(data){
+			sendData("autosort.php","",function(data){// autosort
 				$("#autosort-inner").html(data);
 			});
-			sendData("manageCareers.php","",function(data){
+			sendData("manageCareers.php","",function(data){// manageCareers
 				$("#manageCareers-inner").html(data);
 			});
-			sendData("resetStudent.php","",function(data){
+			sendData("resetStudent.php","",function(data){// resetStudent
 				$("#resetStudent-inner").html(data);
 			})
 		};
@@ -30,8 +30,16 @@
 			sendData("autosort.php","run=Run",function(data){
 				$("#autosort-inner").html(data);
 			});
+			$("#autosort-inner").html("Loading...Please wait");
 		}
-
+		
+		function deleteCareer(id){
+			var ID = "action=del & id=" + id;
+			sendData("manageCareers.php",ID, function(data){
+				$("#manageCareers-inner").html(data);
+			});
+			$("#manageCareers-inner").html("Redrawing table");
+		}
 		</script>
 	</head>
 	<body onload="init()">
