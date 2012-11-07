@@ -14,7 +14,7 @@ require_once "../db.php";
 		<h2>Manage...</h2>
 			<a href="manageCareers.php">careers</a>
 		<h2>Sort...</h2>
-			<a href="autosort.php">automaticly</a> - <a href="resolveBlanks.php">manually</a>
+			<a href="autosort.php">automatically</a> - <a href="resolveBlanks.php">manually</a>
 		<h2>Schedule...</h2>
 			<a href="genScheduleHandouts.php">by student</a> - <a href="genScheduleHandouts.php">by career block</a>
 		<h2>Reset...</h2>
