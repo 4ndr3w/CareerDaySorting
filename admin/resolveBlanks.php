@@ -14,12 +14,21 @@ foreach ( $students as $_student )
 {
 	$studentIncomplete = false;
 	$_placements = $database->getStudentPlacement($_student['id']);
-	foreach ( $_placements as $p )
+	if ( empty($_placements) )
 	{
-		if ( $p == 0 )
+		for ( $i = 0; $i < 3; $i++ )
+			$placements[0] = 0;
+		$studentIncomplete = true;
+	}
+	else
+	{
+		foreach ( $_placements as $p )
 		{
-			$studentIncomplete = true;
-			break;
+			if ( $p == 0 )
+			{
+				$studentIncomplete = true;
+				break;
+			}
 		}
 	}
 	if ( $studentIncomplete )
