@@ -1,14 +1,16 @@
 <?php
 require_once "../db.php";
-if ( array_key_exists("submit", $_POST) )
+if ( array_key_exists("id", $_POST) )
 {
 	$database->removeStudent($_POST['id']);
 	$database->clearStudentChoices($_POST['id']);
 	$database->clearStudentPlacement($_POST['id']);
+	
+	echo "<span class='important'>Deleted student ".$_POST['id']."</span> <br>";
 }
 ?>
 
-<form method="post" action="">
-	ID: <input type="text" name="id"><br>
-	<input type="submit" name="submit" value="Reset">
+<form>
+	ID: <input id="deleteButton" type="text" onkeypress="return validateKeypress(event,'num',999)" name="id"><br>
+	<button type='button' onclick='deleteStudent()' >run</button>
 </form>

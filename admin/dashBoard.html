@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title> Admin Dashboard </title>
 		<script src="../jquery.js"></script>
+		<script src="../keyValidator.js"></script>
 		<script type="text/javascript">
 		function init(){
 			sendData("autosort.php","",function(data){// autosort
@@ -14,9 +15,8 @@
 			});
 			sendData("resetStudent.php","",function(data){// resetStudent
 				$("#resetStudent-inner").html(data);
-			})
+			});
 		};
-
 		function sendData(file,send,done){
 			$.ajax({
 				type:"POST",
@@ -27,18 +27,39 @@
 		}
 
 		function runAutosort(){
-			sendData("autosort.php","run=Run",function(data){
+			var ID ={ run:"pie"};
+			sendData("autosort.php",ID,function(data){
 				$("#autosort-inner").html(data);
 			});
 			$("#autosort-inner").html("Loading...Please wait");
 		}
 		
-		function deleteCareer(id){
-			var ID = "action=del & id=" + id;
+		function deleteCareer(career){
+			var ID = {action:'del', id:career};
 			sendData("manageCareers.php",ID, function(data){
 				$("#manageCareers-inner").html(data);
 			});
 			$("#manageCareers-inner").html("Redrawing table");
+		}
+		
+		function addCareer(career){
+			var _name =  document.getElementById("name").value;
+			var _location = document.getElementById("location").value;
+			var _maxStudents = document.getElementById("maxStudents").value;
+			var ID = {action:'add',name:_name,location:_location,maxStudents:_maxStudents};
+			sendData("manageCareers.php",ID, function(data){
+				$("#manageCareers-inner").html(data);
+			});
+			$("#manageCareers-inner").html("Redrawing table");
+		}
+		
+		function deleteStudent(){
+			var _submit = document.getElementById("deleteButton").value;
+			var ID = {id:_submit};
+			sendData("resetStudent.php", ID, function(data){
+				$("#resetStudent-inner").html(data);
+			});
+			return false;
 		}
 		</script>
 	</head>

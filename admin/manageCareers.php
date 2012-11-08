@@ -1,8 +1,6 @@
 <?php
 require_once "../db.php";
 
-echo "action=".$_POST["action"]."id=".$_POST["id"];
-
 switch ($_POST['action'])
 {
 	case 'add':
@@ -45,10 +43,10 @@ foreach ( $careers as $career )
 		<form>
 			<input type="hidden" name="action" value="add">
 			<input type="hidden" name="id" value="<?php echo $career['id']; ?>">
-			<td><input type="text" name="name" class="tableInput"></td>
-			<td><input type="text" name="location" class="tableInput"></td>
-			<td><input type="text" name="maxStudents" class="tableInput"></td>
-			<td><input type="submit" value="Add" class="tableInput"></td>
+			<td><input type="text" id="name" class="tableInput"></td>
+			<td><input type="text" id="location" class="tableInput"></td>
+			<td><input type="text" id="maxStudents" class="tableInput"></td>
+			<td><button type="button" onclick="addCareer()">Add</button></td>
 		</form>
 	</tr>
 </table>
