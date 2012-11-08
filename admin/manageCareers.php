@@ -19,7 +19,7 @@ $careers = $database->getCareers();
 <html>
 	<head>
 		<title>Manage Careers</title>
-		<link rel="stylesheet" href="admin.css">
+		<link rel="stylesheet" href="admin.css" />
 	</head>
 	
 	<body>
@@ -58,5 +58,7 @@ $careers = $database->getCareers();
 			</form>
 		</tr>
 	</table>
+	<br>
+	<a href="importCareers.php">Import careers from CSV</a>
 	</body>
 </html>

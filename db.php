@@ -51,14 +51,15 @@ class Database
 	
 	
 	
-	function addCareer($name, $location, $limit)
+	function addCareer($name, $location, $limit, $group = 0)
 	{
 		$name = mysql_real_escape_string($name);
 		$location = mysql_real_escape_string($location);
 		if ( ($limit = intval($limit)) == 0 )
 			return false;
-			
-		return mysql_query("INSERT INTO `careers` (name, location, maxStudents) VALUES('".$name."', '".$location."', ".$limit.")");
+		if ( ($group = intval($group)) == 0 )
+			return false;
+		return mysql_query("INSERT INTO `careers` (`name`, `location`, `maxStudents`, `group`) VALUES('".$name."', '".$location."', ".$limit.", ".$group.")");
 	}
 	
 	function getCareer($id)
