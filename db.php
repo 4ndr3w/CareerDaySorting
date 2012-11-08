@@ -260,9 +260,9 @@ class Database
 		if ( ($id = intval($id)) == 0 )
 			return false;
 		
-		$this->removeStudent($_POST['id']);
-		$this->clearStudentChoices($_POST['id']);
-		$this->clearStudentPlacement($_POST['id']);
+		$this->removeStudent($id);
+		$this->clearStudentChoices($id);
+		$this->clearStudentPlacement($id);
 		return true;
 	}
 	
