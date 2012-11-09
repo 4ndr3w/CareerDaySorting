@@ -3,19 +3,38 @@
 	<head>
 		<meta charset="UTF-8">
 		<title> Admin Dashboard </title>
+		<link rel="stylesheet" href="admin.css">
 		<script src="../jquery.js"></script>
+		<script src="../jquery.chromatable.js"></script>
 		<script src="../keyValidator.js"></script>
 		<script type="text/javascript">
 		function init(){
 			sendData("autosort.php","",function(data){// autosort
 				$("#autosort-inner").html(data);
 			});
+			$("#autosort-inner").html("Loading...Please wait");
 			sendData("manageCareers.php","",function(data){// manageCareers
 				$("#manageCareers-inner").html(data);
+				$("#table-Careers").chromatable({
+					width: "550px",
+					height: "400px",
+					scrolling: "yes"
+				});
 			});
+			$("#manageCareers-inner").html("Loading...Please wait");
 			sendData("resetStudent.php","",function(data){// resetStudent
 				$("#resetStudent-inner").html(data);
 			});
+			$("#resetStudent-inner").html("Loading...Please wait");
+			sendData("genScheduleHandouts.php","",function(data){// generate the list of students
+				$("#genScheduleHandouts-inner").html(data);
+				$("#table-Students").chromatable({
+					width: "590px",
+					height: "400px",
+					scrolling: "yes"
+				});
+			});
+			$("#genScheduleHandouts-inner").html("Loading...Please wait");
 		};
 		function sendData(file,send,done){
 			$.ajax({
@@ -38,6 +57,11 @@
 			var ID = {action:'del', id:career};
 			sendData("manageCareers.php",ID, function(data){
 				$("#manageCareers-inner").html(data);
+				$("#table-Careers").chromatable({
+					width: "590px",
+					height: "400px",
+					scrolling: "yes"
+				});
 			});
 			$("#manageCareers-inner").html("Redrawing table");
 		}
@@ -49,6 +73,11 @@
 			var ID = {action:'add',name:_name,location:_location,maxStudents:_maxStudents};
 			sendData("manageCareers.php",ID, function(data){
 				$("#manageCareers-inner").html(data);
+				$("#table-Careers").chromatable({
+					width: "590px",
+					height: "400px",
+					scrolling: "yes"
+				});
 			});
 			$("#manageCareers-inner").html("Redrawing table");
 		}
@@ -59,29 +88,42 @@
 			sendData("resetStudent.php", ID, function(data){
 				$("#resetStudent-inner").html(data);
 			});
-			return false;
+			$("#resetStudent-inner").html("Loading...Please wait");
+			sendData("genScheduleHandouts.php","",function(data){// generate the list of students
+				$("#genScheduleHandouts-inner").html(data);
+				$("#table-Students").chromatable({
+					width: "590px",
+					height: "400px",
+					scrolling: "yes"
+				});
+			});
+			$("#genScheduleHandouts-inner").html("Loading...Please wait");
+		}
+		
+		function genStudentlist(){
+			
 		}
 		</script>
 	</head>
 	<body onload="init()">
 		<div id="container">
+			<div id="header">
+				<h1>Career Day Dash Board</h1>
+			</div>
 			<section id="autosort">
 				<h2>Run Autosort</h2>
 				<div id="autosort-inner"></div>
 			</section>
-
-			<section id="resolveBlacks">
-
-			</section>
-
 			<section id="manageCareers">
 				<h2>Manage Careers</h2>
 				<div id="manageCareers-inner"></div>
 			</section>
 
-			<section id="resetStudent">
-				<h2>Reset Student</h2>
+			<section id="manageStudents">
+				<h2>Manage Students</h2>
+				<h3>Reset student</h3>
 				<div id="resetStudent-inner"></div>
+				<div id="genScheduleHandouts-inner"></div>
 			</section>	
 		</div>
 	</body>

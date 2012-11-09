@@ -1,3 +1,4 @@
+
 <?php
 require_once("../db.php");
 $students = $database->getStudents();
@@ -11,31 +12,27 @@ foreach ( $students as $k=>$v )
 array_multisort($pivot, SORT_DESC, $students);
 
 ?>
+<br>
+<h3>Current List of Students</h3>
+<table id="table-Students">
 
-<html>
-<head>
-	<title>Schedule Handouts</title>
-	<link rel="stylesheet" href="admin.css">
-</head>
-
-<body>
 <?php
 foreach ( $students as $student )
 {
 ?>
-<p class="schedule">
+
 <?php
 	$placements = $database->getStudentPlacement($student['id']);
-	echo "ID: ".$student['id']." - <strong>".$student['first']." ".$student['last']."</strong> - HR: ".$student['homeroom']."<br>";
+	echo "<th colspan='4'>ID: ".$student['id']." ".$student['first']." ".$student['last']." HR: ".$student['homeroom']."</th><tr>";
 	for ( $i = 1; $i < 4; $i++ )
 	{
 		$career = $database->getCareer($placements["p".$i]);
-		echo $career['name']." - ".$career['location']."<br>";
+		echo "<td>".$career['name']." - ".$career['location']."</td>";
 	}
+	echo "</tr></tr>";
 ?>
-</p>
 <?php
 }
 ?>
-
+</table>
 
