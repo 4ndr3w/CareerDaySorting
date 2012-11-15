@@ -38,11 +38,22 @@ $careers = $database->getCareers(false);
 			return true;
 		}
 
+		function getCareerNameForID(id)
+		{
+			var careerList = document.getElementById("f5").options;
+			for ( var i = 0; i < careerList.length; i++ )
+			{
+				if ( careerList[i].value == id )
+					return careerList[i].text;
+			}
+			return "";
+		}
+
 		function update(num){
 			if ( num >= 5 && num <= 8 ) // Career lists
 			{
 				var careerList = document.getElementById("f5").options;
-				document.getElementById("c"+num).innerHTML = careerList[document.getElementById("f"+num).value].text;
+				document.getElementById("c"+num).innerHTML = getCareerNameForID(document.getElementById("f"+num).value);
 			}
 			else // Normal Fields
 				document.getElementById("c"+num).innerHTML = document.getElementById("f"+num).value;
