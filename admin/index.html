@@ -49,6 +49,15 @@
 			var ID ={ run:"pie"};
 			sendData("autosort.php",ID,function(data){
 				$("#autosort-inner").html(data);
+				sendData("genScheduleHandouts.php","",function(data){// generate the list of students
+					$("#genScheduleHandouts-inner").html(data);
+					$("#table-Students").chromatable({
+						width: "590px",
+						height: "400px",
+						scrolling: "yes"
+					});
+				});
+				$("#genScheduleHandouts-inner").html("Loading...Please wait");
 			});
 			$("#autosort-inner").html("Loading...Please wait");
 		}
@@ -87,17 +96,17 @@
 			var ID = {id:_submit};
 			sendData("resetStudent.php", ID, function(data){
 				$("#resetStudent-inner").html(data);
+				sendData("genScheduleHandouts.php","",function(data){// generate the list of students
+					$("#genScheduleHandouts-inner").html(data);
+					$("#table-Students").chromatable({
+						width: "590px",
+						height: "400px",
+						scrolling: "yes"
+					});
+				});
+				$("#genScheduleHandouts-inner").html("Loading...Please wait");
 			});
 			$("#resetStudent-inner").html("Loading...Please wait");
-			sendData("genScheduleHandouts.php","",function(data){// generate the list of students
-				$("#genScheduleHandouts-inner").html(data);
-				$("#table-Students").chromatable({
-					width: "590px",
-					height: "400px",
-					scrolling: "yes"
-				});
-			});
-			$("#genScheduleHandouts-inner").html("Loading...Please wait");
 		}
 		
 		function genStudentlist(){
