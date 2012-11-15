@@ -38,11 +38,22 @@ $careers = $database->getCareers(false);
 			return true;
 		}
 
+		function getCareerNameForID(id)
+		{
+			var careerList = document.getElementById("f5").options;
+			for ( var i = 0; i < careerList.length; i++ )
+			{
+				if ( careerList[i].value == id )
+					return careerList[i].text;
+			}
+			return "";
+		}
+
 		function update(num){
 			if ( num >= 5 && num <= 8 ) // Career lists
 			{
 				var careerList = document.getElementById("f5").options;
-				document.getElementById("c"+num).innerHTML = careerList[document.getElementById("f"+num).value].text;
+				document.getElementById("c"+num).innerHTML = getCareerNameForID(document.getElementById("f"+num).value);
 			}
 			else // Normal Fields
 				document.getElementById("c"+num).innerHTML = document.getElementById("f"+num).value;
@@ -194,8 +205,8 @@ $careers = $database->getCareers(false);
 						<button id="next" type="button" onclick="showForm(1)" value="Next">Next</button>
 					</div>
 					<div id="sect-1" class="sect">
-						<input type="radio" id="optOutButton" name="seniorOptOut" value="1" disabled="disabled" onChange="disabledChoicesCheck()">I am going to career shadow or attend a college visit.</input><br><br>
-						<input type="radio" id="optInButton" name="seniorOptOut" value="0" checked="checked" onChange="disabledChoicesCheck()">I am going to participate in career day.</input><br>
+						<input type="radio" id="optOutButton" name="seniorOptOut" value="1" disabled="disabled" onChange="disabledChoicesCheck()" /><label for="optOutButton">I am going to career shadow or attend a college visit.</label><br><br>
+						<input type="radio" id="optInButton" name="seniorOptOut" value="0" checked="checked" onChange="disabledChoicesCheck()" /><label for="optInButton">I am going to participate in career day.</label><br>
 						Choice 1:
 						<select id="f5" onchange="update(5)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
