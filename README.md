@@ -24,19 +24,19 @@ Prerequisites:
 * A MySQL Database
 
 Installation instructions:
-- Create an empty MySQL database and import the tables from structure.sql
-- Put the contents of this folder where your webserver is serving from
-- Rename or copy config.php.example to config.php
-- Open config.php with your favorite editor and set your MySQL connection information
-- Go to the admin page with your web browser and start adding careers
+1. Create an empty MySQL database and import the tables from structure.sql
+2. Put the contents of this folder where your webserver is serving from
+3. Rename or copy config.php.example to config.php
+4. Open config.php with your favorite editor and set your MySQL connection information
+5. Go to the admin page with your web browser and start adding careers
 
 ### Suggested Workflow
 This is the suggested workflow for running CareerDaySorter:
 
-- Construct a list of careers in an Excel document, using the format specified in importCareers.php
-- Export the career list as a CSV and import it to CareerDaySorter using importCareers.php
-- Ensure all data was proporly imported
-- Distribute the link to index.php or signup.php to teachers/students
-- AFTER all students have signed up, go to the admin page and run an automatic sort
-- Manually resolve any students that can't be automaticlly sorted
-- Print student schedules and career attendance lists ( or save as PDF )
+1. Construct a list of careers in an Excel document, using the format specified in importCareers.php
+2. Export the career list as a CSV and import it to CareerDaySorter using importCareers.php
+3. Ensure all data was proporly imported
+4. Distribute the link to index.php or signup.php to teachers/students
+5. AFTER all students have signed up, go to the admin page and run an automatic sort
+6. Manually resolve any students that can't be automaticlly sorted
+7. Print student schedules and career attendance lists ( or save as PDF )
