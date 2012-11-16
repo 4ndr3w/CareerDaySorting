@@ -24,6 +24,7 @@ Prerequisites:
 * A MySQL Database
 
 Installation instructions:
+
 1. Create an empty MySQL database and import the tables from structure.sql
 2. Put the contents of this folder where your webserver is serving from
 3. Rename or copy config.php.example to config.php
