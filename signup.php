@@ -1,6 +1,14 @@
 <?php
 require_once "db.php";
 $careers = $database->getCareers(false);
+$careersSortPivot = array();
+
+foreach ( $careers as $k=>$v )
+{
+	$careersSortPivot[$k] = $v['name'];
+}
+
+array_multisort($careersSortPivot, SORT_ASC, $careers);
 ?>
 <!DOCTYPE html>
 <html>
