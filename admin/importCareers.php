@@ -22,15 +22,27 @@ if ( array_key_exists("uploadedfile", $_FILES) )
 	}
 }
 ?>
-<form enctype="multipart/form-data" action="" method="POST">
-	Choose a CSV file to upload: <input name="uploadedfile" type="file" /><br />
-	<input type="submit" value="Upload File" />
-</form>
-
-The format of the CSV file should be the following, with no column headers:<br>
-name,location,maxStudents,group<br>
-<br>
-Name and Location are strings<br>
-maxStudents and group are integers<br>
-<br><br>
-<a href="manageCareers.php">Back</a>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Import Careers</title>
+	<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+	<div id="container">
+		<br><br>
+		<form enctype="multipart/form-data" action="" method="POST">
+			Choose a CSV file to upload: <input name="uploadedfile" type="file" /><br />
+			<input type="submit" value="Upload File" />
+		</form>
+		<br>
+		The format of the CSV file should be the following, with no column headers:<br>
+		name,location,maxStudents,group<br>
+		<br>
+		Name and Location are strings<br>
+		maxStudents and group are integers<br>
+		<br>
+		<a href="index.html">Back</a>
+	</div>
+</body>
+</html>
