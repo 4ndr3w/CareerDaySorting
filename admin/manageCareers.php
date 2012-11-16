@@ -13,7 +13,7 @@ switch ($_POST['action'])
 }
 
 
-$careers = $database->getCareers();
+$careers = $database->getCareers(false);
 $careers = array_reverse($careers);
 ?>
 <h3>Add a Career</h3>
