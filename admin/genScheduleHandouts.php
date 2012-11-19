@@ -1,8 +1,6 @@
-
 <?php
 require_once("../db.php");
 $students = $database->getStudents();
-
 $pivot = array();
 foreach ( $students as $k=>$v )
 {
@@ -14,6 +12,8 @@ array_multisort($pivot, SORT_DESC, $students);
 ?>
 <br>
 <h3>Current List of Students</h3>
+Printable lists: <a href="printables.php?by=student">by Student</a> - <a href="printables.php?by=career">by Career</a>
+<br>
 <table id="table-Students">
 
 <?php
