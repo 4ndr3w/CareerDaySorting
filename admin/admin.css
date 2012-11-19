@@ -20,6 +20,11 @@ tr,th{
 	background-color:#FFFFFF;	
 }
 
+h5
+{
+	margin:0;
+}
+
 #container{
 	width:1200px;
 	margin:auto;
@@ -50,4 +55,15 @@ tr,th{
 	text-align:center;
 }
 
+.centered
+{
+	margin: auto;
+	text-align: center;
+}
+
+.columnHeader
+{
+	font-weight:bold;
+	text-align:center;
+}
 

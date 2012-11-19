@@ -5,15 +5,11 @@ if ( !array_key_exists("run", $_POST) )
 ?>
 	<form action="" method="post">
 		Running an automatic sort will overwrite any existing placement data.<br>
-		Confirm: <button type='button' onclick='runAutosort()'>run</button>
+		<button type='button' onclick='runAutosort()'>Run Automated Sort</button>
 	</form>
 <?php
 	die();
 }
-
-
-
-
 
 require_once "../db.php";
 $startTime = microtime(true);

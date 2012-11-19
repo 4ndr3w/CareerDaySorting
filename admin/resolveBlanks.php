@@ -41,7 +41,7 @@ foreach ( $students as $_student )
 }
 
 if ( empty($student) )
-	die("All students have been successfuly sorted<br>\n<a href=\"index.php\">Back</a>");
+	die("All students have been successfuly sorted<br>\n<a href=\"index.html\">Back</a>");
 
 
 ?>
@@ -52,23 +52,24 @@ if ( empty($student) )
 		<link rel="stylesheet" href="admin.css">
 	</head>
 	<body>
+			<br><br><br>
 		<table id="info" border="1">
 			<tr>
-				<td colspan="100%"><span class="columnHeader">Student Info</span></td>
+				<td colspan="100%" class="columnHeader">Student Info</td>
 			</tr>
 			
 			<tr>
-				<td><span class="columnHeader">ID</span></td>
+				<td class="columnHeader">ID</td>
 				<td><?php echo $student['id']; ?></td>
 			</tr>
 		
 			<tr>
-				<td><span class="columnHeader">Name</span></td>
+				<td class="columnHeader">Name</td>
 				<td><?php echo $student['first']." ".$student['last']; ?></td>
 			</tr>
 		
 			<tr>
-				<td><span class="columnHeader">Grade</span></td>
+				<td class="columnHeader">Grade</td>
 				<td><?php echo $student['grade']; ?></td>
 			</tr>
 		</table>
@@ -76,7 +77,7 @@ if ( empty($student) )
 		
 		<table id="choices" border="1">
 			<tr>
-				<td colspan="100%"><span class="columnHeader">Choices</span></td>
+				<td colspan="100%" class="columnHeader">Choices</td>
 			</tr>
 			<?php 
 			for ($i = 0; $i < 4; $i++ )
@@ -84,7 +85,7 @@ if ( empty($student) )
 				$thisChoice = $choices['s'.($i+1)];
 			?>
 				<tr>
-					<td><span class="bolded"><?php echo $i+1; ?></span></td>
+					<td><span class="bolded"><?php echo $i+1; ?></td>
 					<td><?php echo $careers[$thisChoice]['name']; ?></td>
 				</tr>
 			<?php
@@ -97,11 +98,11 @@ if ( empty($student) )
 			<input type="hidden" name="id" value="<?php echo $student['id']; ?>">
 		<table class="schedule" border="1">
 			<tr>
-				<td colspan="100%"><span class="columnHeader">Schedule</span></td>
+				<td colspan="100%" class="columnHeader">Schedule</td>
 			</tr>
 			<tr>
-				<td><span class="columnHeader">Block</span></td>
-				<td><span class="columnHeader">Career</span></td>
+				<td class="columnHeader">Block</td>
+				<td class="columnHeader">Career</td>
 			</tr>
 			<?php
 			for ( $i = 0; $i < 3; $i++ )
@@ -145,9 +146,10 @@ if ( empty($student) )
 			<?php
 			}
 			?>
+			<tr>
+				<td colspan="100%" class="centered"><input type="submit" name="submit" value="Submit"></td>
+			</tr>
 		</table>
-		<br>
-		<input type="submit" name="submit" value="Submit" class="centered">
-	</form>
+		</form>
 	</body>
 </html>
