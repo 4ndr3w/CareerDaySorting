@@ -25,6 +25,7 @@ $careers = array_reverse($careers);
 	<input type="text" id="maxStudents" class="tableInput" placeholder="max student amount">
 	<button type="button" onclick="addCareer()">Add</button></td>
 </form>
+<a href="importCareers.php">Import from CSV</a>
 <br>
 
 <h3>Current List of Careers</h3>
