@@ -42,7 +42,8 @@ This is the suggested workflow for running CareerDaySorter:
 6. Manually resolve any students that can't be automaticlly sorted
 7. Print student schedules and career attendance lists ( or save as PDF )
 
-### Hidden Events
-"Events" such as the class assembly and career shadowing are inserted as part of the structure.sql file. If you did not import using this file, you will need to manually insert the row for these events and set their ID in config.php
+### Hidden Careers
+"Careers" such as the class assembly and career shadowing exist as hidden careers inside the database. A hidden career does not appear in the signup list for students.
+If you did not import using the structure file, you will need to manually insert the row for these events and set their ID in config.php
 
 By default, Assembly has an ID of 999 and Career Shadowing/College Visit has an ID of 998.
