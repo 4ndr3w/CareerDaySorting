@@ -19,9 +19,6 @@ Printable lists: <a href="printables.php?by=student">by Student</a> - <a href="p
 <?php
 foreach ( $students as $student )
 {
-?>
-
-<?php
 	$placements = $database->getStudentPlacement($student['id']);
 	echo "<th colspan='4'>ID: ".$student['id']." ".$student['first']." ".$student['last']." HR: ".$student['homeroom']."</th><tr>";
 	for ( $i = 1; $i < 4; $i++ )

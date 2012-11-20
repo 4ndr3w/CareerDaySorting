@@ -12,5 +12,5 @@ if ( array_key_exists("id", $_POST) )
 
 <form>
 	<input id="deleteButton" type="text" onkeypress="return validateKeypress(event,'num',999)" name="id" placeholder="ID">
-	<button type='button' onclick='deleteStudent()' >reset</button>
+	<button type='button' onclick='deleteStudent()'>Reset</button>
 </form>

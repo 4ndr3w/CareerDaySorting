@@ -20,9 +20,9 @@ $careers = array_reverse($careers);
 <form>
 	<input type="hidden" name="action" value="add">
 	<input type="hidden" name="id" value="<?php echo $career['id']; ?>">
-	<td colspan="4"><input type="text" id="name" class="tableInput" placeholder="name">
-	<input type="text" id="location" class="tableInput" placeholder="location">
-	<input type="text" id="maxStudents" class="tableInput" placeholder="max student amount">
+	<td colspan="4"><input type="text" id="name" class="tableInput" placeholder="Name">
+	<input type="text" id="location" class="tableInput" placeholder="Location">
+	<input type="text" id="maxStudents" class="tableInput" placeholder="Student Limit">
 	<button type="button" onclick="addCareer()">Add</button></td>
 </form>
 <a href="importCareers.php">Import from CSV</a>
