@@ -441,4 +441,4 @@ foreach ( $stats as $stat )
 echo "--------------------\n";
 ?>
 <br>
-<button type='button' onclick='runAutosort()'>run again</button>
+<button type='button' onclick='runAutosort()'>Run Again</button>
