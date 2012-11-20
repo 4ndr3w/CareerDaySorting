@@ -75,6 +75,16 @@ body{
 	float:left;
 }
 
+#footer {
+	position: absolute;
+	width:100%;
+	margin:auto;
+	text-align:center;
+	top:530px;
+	color:grey;
+	font-size:8px;
+}
+
 .sect{
 	display:none;
 }

@@ -260,7 +260,8 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 					
 				</section>	
 			</div>
-			<section id="footer"></section>
+			
 		</div>
+		<section id="footer">Algorithm by Andrew Lobos<br>Design by Ben Thomas</section>
 	</body>
 </html>
