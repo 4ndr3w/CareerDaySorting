@@ -7,8 +7,8 @@ $databaseInfo = array(
 	"password" => "",
 	"database" => "careerday");
 
-$assemblyID = 99;
-$seniorOptOutID = 98;
+$assemblyID = 999;
+$seniorOptOutID = 998;
 
 session_start();
 ?>
