@@ -6,7 +6,7 @@ if ( array_key_exists("id", $_POST) )
 
 
 $students = $database->getStudents();
-$careers = $database->getCareers();
+$careers = $database->getCareers(false);
 $student = array();
 $placements = array();
 $choices = array();
