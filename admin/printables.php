@@ -9,6 +9,17 @@
 	.datablock
 	{
 		page-break-inside:avoid;
+		width: 50%;
+	}
+
+	.left
+	{
+		float:left;
+	}
+
+	.right
+	{
+		float: right;
 	}
 	
 	table
@@ -32,11 +43,13 @@ if ( $_GET['by'] == "student" )
 	}
 
 	array_multisort($pivot, SORT_DESC, $students);
-	
+	$total = count($students);
+	$cur = 0;
 	foreach ( $students as $student)
 	{
 		$placements = $database->getStudentPlacement($student['id']);
-		echo "<div class=\"datablock\">";
+
+		echo "<div class=\"datablock ".($cur>($total/2)?"right":"left")."\">";
 		echo "ID: ".$student['id']." - ".$student['first']." ".$student['last']." - HR: ".$student['homeroom']."<br>\n";
 		for ( $i = 1; $i < 4; $i++ )
 		{
@@ -44,6 +57,7 @@ if ( $_GET['by'] == "student" )
 			echo $i." - ".$career['name']." - ".$career['location']."<br>\n";
 		}
 		echo "<br></div>\n";
+		$cur++;
 	}
 }
 else if ( $_GET['by'] == "career" )
