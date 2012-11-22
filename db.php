@@ -51,7 +51,7 @@ class Database
 	
 	
 	
-	function addCareer($name, $location, $limit, $group = 0)
+	function addCareer($name, $location, $limit, $group = 1)
 	{
 		$name = mysql_real_escape_string($name);
 		$location = mysql_real_escape_string($location);
