@@ -39,7 +39,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 				for ( b = 5; b <= 8; b++ )
 				{
 					bVal = document.getElementById("f"+b).value;
-					if ( a != b && aVal == bVal )
+					if ( a != b && aVal == bVal && aVal != 0 )
 						return false;
 				}
 			}
@@ -58,6 +58,9 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 		}
 
 		function update(num){
+			if ( !choicesAreUnique() )
+				alert("You need to select unique career choices");
+				
 			if ( num >= 5 && num <= 8 ) // Career lists
 			{
 				var careerList = document.getElementById("f5").options;
