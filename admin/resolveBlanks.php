@@ -2,8 +2,12 @@
 require_once "../db.php";
 
 if ( array_key_exists("id", $_POST) )
-	$database->updateStudentPlacement($_POST['id'], $_POST['p1'], $_POST['p2'], $_POST['p3']);
-
+{
+	if ( $database->getStudentPlacement($_POST['id']) )
+		$database->updateStudentPlacement($_POST['id'], $_POST['p1'], $_POST['p2'], $_POST['p3']);
+	else
+		$database->setStudentPlacement($_POST['id'], $_POST['p1'], $_POST['p2'], $_POST['p3']);
+}
 
 $students = $database->getStudents();
 $careers = $database->getCareers();
