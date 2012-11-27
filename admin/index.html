@@ -46,6 +46,9 @@
 		}
 
 		function runAutosort(){
+			if ( !confirm("Are you sure?\nRunning an automatic sort will overwrite any existing placement data.") )
+				return;
+				
 			var ID ={ run:"run"};
 			sendData("autosort.php",ID,function(data){
 				$("#autosort-inner").html(data);
@@ -63,13 +66,16 @@
 		}
 		
 		function deleteCareer(career){
+			if ( !confirm("Are you sure?") )
+				return;
 			var ID = {action:'del', id:career};
 			sendData("careerTable.php",ID, function(data){
 				$("#manageCareers-inner").html(data);
 				$("#table-Careers").chromatable({
-					width: "590px",
+					width: "550px",
 					height: "400px",
 					scrolling: "yes"
+
 				});
 			});
 			$("#manageCareers-inner").html("Redrawing table");
@@ -93,6 +99,9 @@
 		
 		function deleteStudent(){
 			var _submit = document.getElementById("deleteButton").value;
+			if ( !confirm("Are you sure?\nALL data will be removed for student "+_submit) )
+				return;
+				
 			var ID = {id:_submit};
 			sendData("resetStudent.php", ID, function(data){
 				$("#resetStudent-inner").html(data);
