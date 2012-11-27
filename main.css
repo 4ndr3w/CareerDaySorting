@@ -1,7 +1,7 @@
 body{
 	margin:0;
 	font-family:Verdana;
-	background:url('gradient.png');
+	background:url('gradient.png') repeat-x;
 	background-color:#CCCCCC;
 }
 
