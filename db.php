@@ -9,9 +9,9 @@ class Database
 		global $databaseInfo;
 		$this->conn = mysql_connect($databaseInfo['hostname'], $databaseInfo['username'], $databaseInfo['password']);
 		if ( !$this->conn )
-			die("DB Connection Failed");
-		mysql_select_db($databaseInfo['database'], $this->conn);
-		echo mysql_error();
+			die("DB Connection Failed: "+mysql_error());
+		if ( !mysql_select_db($databaseInfo['database'], $this->conn) )
+			die("mysql_select_db failed: "+mysql_error());
 	}
 	
 	function __destruct()
