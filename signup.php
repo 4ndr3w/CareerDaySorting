@@ -59,8 +59,8 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 
 		function update(num){
 			if ( !choicesAreUnique() )
-				alert("You need to select unique career choices");
-				
+				alert("Every career choice must be different");
+
 			if ( num >= 5 && num <= 8 ) // Career lists
 			{
 				var careerList = document.getElementById("f5").options;
