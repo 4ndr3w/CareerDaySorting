@@ -34,10 +34,13 @@ class Database
 		$output = array();
 		while ( $d = mysql_fetch_array($result, MYSQL_ASSOC) )
 		{
-			if ( $idAsKey && !empty($d) )
-				$output[$d['id']] = $d;
-			else if ( !empty($d) )
-				$output[] = $d;
+			if ( !empty($d) )
+			{
+				if ( array_key_exists("id", $d) )
+					$output[$d['id']] = $d;
+				else
+					$output[] = $d;
+			}
 		}
 		return $output;
 	}
@@ -51,7 +54,7 @@ class Database
 	
 	
 	
-	function addCareer($name, $location, $limit, $group = 0)
+	function addCareer($name, $location, $limit, $group = 1)
 	{
 		$name = mysql_real_escape_string($name);
 		$location = mysql_real_escape_string($location);

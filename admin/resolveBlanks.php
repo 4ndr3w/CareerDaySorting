@@ -86,7 +86,7 @@ if ( empty($student) )
 			?>
 				<tr>
 					<td><span class="bolded"><?php echo $i+1; ?></td>
-					<td><?php echo $careers[$thisChoice]['name']; ?></td>
+					<td><?php $c = $database->getCareer($thisChoice); echo $c['name']; ?></td>
 				</tr>
 			<?php
 			}
@@ -113,8 +113,8 @@ if ( empty($student) )
 				<td><?php echo $thisBlock; ?></td>
 				<td>
 					<select name="p<?php echo $thisBlock; ?>">
-					<?php 
-					if ( $placements['p'.$thisBlock] == $assemblyID ) 
+					<?php
+					if ( $placements['p'.$thisBlock] == $assemblyID )
 					{ ?>
 						<option selected="selected" id="<?php echo $assemblyID; ?>">Assembly</option>
 					<?php
@@ -127,7 +127,7 @@ if ( empty($student) )
 						<option value="0" selected="selected" disabled="disabled">Select One</option> 
 						<?php
 						}
-						
+
 						foreach ( $careers as $career )
 						{
 							$full = ($database->getNumberOfStudentsInCareer($career['id'], $thisBlock) >= $career['maxStudents']);
