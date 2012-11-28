@@ -9,6 +9,4 @@ $databaseInfo = array(
 
 $assemblyID = 999;
 $seniorOptOutID = 998;
-
-session_start();
 ?>
