@@ -215,16 +215,16 @@ class Database
 			return false;
 		if ( ($grade = intval($grade)) == 0 )
 			return false;
-		if ( ($homeroom = intval($homeroom)) == 0 )
-			return false;
 			
 		$first = mysql_real_escape_string($first);
 		$last = mysql_real_escape_string($last);
 		
+		$homeroom = mysql_real_escape_string($homeroom);
+		
 		if ( empty($first) || empty($last) )
 			return false;
 		
-		return mysql_query("INSERT INTO `students` (id, first, last, grade, homeroom) VALUES(".$id.", '".$first."', '".$last."', ".$grade.", ".$homeroom.")");
+		return mysql_query("INSERT INTO `students` (id, first, last, grade, homeroom) VALUES(".$id.", '".$first."', '".$last."', ".$grade.", '".$homeroom."')");
 	}
 	
 	function getStudent($id)
@@ -288,6 +288,20 @@ class Database
 	function resetStatistics()
 	{
 		mysql_query("DELETE FROM `statistics`");
+	}
+	
+	function getHomerooms()
+	{
+		$homerooms = $this->genaricGetSet("homerooms");
+		$pivot = array();
+
+		foreach ( $homerooms as $k=>$v )
+		{
+			$pivot[$k] = $v['name'];
+		}
+
+		array_multisort($pivot, SORT_ASC, $homerooms);
+		return $homerooms;
 	}
 	
 }

@@ -212,7 +212,16 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 						Student ID #: <input type="text" id="f0" onblur="update(0)" onkeypress="return validateKeypress(event,2,6)"><br>
 						First Name: <input type="text" id="f1" onblur="update(1)" onkeypress="return validateKeypress(event,1,999)"><br>
 						Last Name: <input type="text" id="f2" onblur="update(2)" onkeypress="return validateKeypress(event,1,999)"><br>
-						Homeroom #: <input type="text" id="f3" onblur="update(3)" onkeypress="return validateKeypress(event,2,3)"><br>
+						Homeroom: <select id="f3" onchange="update(3)">
+							<option value="" selected="selected" disabled="disabled">-Select One-</option>
+							<?php
+							$homerooms = $database->getHomerooms();
+							foreach ( $homerooms as $homeroom )
+							{
+								echo "<option value=\"".$homeroom['name']."\">".$homeroom['name']."</option>";
+							}
+							?>
+						</select><br>
 						Grade:
 						<select id="f4" onchange="seniorCheck()">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
