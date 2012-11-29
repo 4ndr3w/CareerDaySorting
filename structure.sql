@@ -40,19 +40,6 @@ INSERT INTO `careers` (`id`, `name`, `location`, `maxStudents`, `group`, `hidden
 INSERT INTO `careers` (`id`, `name`, `location`, `maxStudents`, `group`, `hidden`) VALUES (998, 'College Visit/Career Shadowing', '-', 999, -1, 1);
 
 
-# Dump of table groups
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `groups`;
-
-CREATE TABLE `groups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
-
 # Dump of table placements
 # ------------------------------------------------------------
 
