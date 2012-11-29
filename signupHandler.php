@@ -3,6 +3,9 @@ require_once("db.php");
 $_POST['first'][0] = strtoupper($_POST['first'][0]);
 $_POST['last'][0] = strtoupper($_POST['last'][0]);
 
+if ( $database->getStudent($_POST['id']) )
+	die("dup");
+
 if ( $database->addStudent($_POST['id'], $_POST['first'], $_POST['last'], $_POST['grade'], $_POST['homeroom']) )
 {
 	if ( $_POST['isSeniorOptOut'] == "true" )

@@ -166,6 +166,10 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 					{
 						alert("Please make sure that all of the information you have entered is valid.\n");
 					}
+					else if ( data == "dup" )
+					{
+						alert("You have already submitted your career choices.\n\nYou must call the help desk to clear your choices at extention 1776");
+					}
 					else
 					{
 						alert("Thank you! Your choices have been recorded.\n");
