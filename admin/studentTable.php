@@ -12,8 +12,8 @@ array_multisort($pivot, SORT_DESC, $students);
 ?>
 <br>
 <h3>Current List of Students</h3>
-Printable lists: <a href="printables.php?by=student">by Student</a> - <a href="printables.php?by=career">by Career</a>
-<br>
+<a href="findMissing.php">Find Missing Students</a><br>
+Printable lists: <a href="printables.php?by=student">by Student</a> - <a href="printables.php?by=career">by Career</a><br>
 <table id="table-Students">
 
 <?php
