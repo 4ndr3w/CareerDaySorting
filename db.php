@@ -272,7 +272,9 @@ class Database
 	
 	function addStatistic($name, $value)
 	{
-		mysql_query("INSERT INTO `statistics` (name, value) VALUES('".$name."', '".$value."')");
+		$name = mysql_real_escape_string($name);
+		$value = mysql_real_escape_string($value);
+		return mysql_query("INSERT INTO `statistics` (name, value) VALUES('".$name."', '".$value."')");
 	}
 	
 	function getStatistics()
@@ -302,6 +304,17 @@ class Database
 
 		array_multisort($pivot, SORT_ASC, $homerooms);
 		return $homerooms;
+	}
+	
+	function addHomeroom($name)
+	{
+		$name = mysql_real_escape_string($name);
+		return mysql_query("INSERT INTO `homerooms` (name) VALUES('".$name."')");
+	}
+	
+	function removeHomeroom($id)
+	{
+		return $this->genaricRemove("homerooms", $id);
 	}
 	
 }

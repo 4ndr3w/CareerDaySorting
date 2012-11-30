@@ -27,6 +27,8 @@ $careers = array_reverse($careers);
 </form>
 <a href="importCareers.php">Import from CSV</a>
 <br>
+<br>
+<a href="manageHomerooms.php">Manage Homerooms</a>
 
 <h3>Current List of Careers</h3>
 <table class="centered" id="table-Careers">

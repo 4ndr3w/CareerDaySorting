@@ -32,4 +32,3 @@ foreach ( $students as $student )
 }
 ?>
 </table>
-
