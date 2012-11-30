@@ -13,7 +13,9 @@ CREATE TABLE `careers` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-
+# Add static events
+INSERT INTO `careers` (`id`, `name`, `location`, `maxStudents`, `group`, `hidden`) VALUES (999, 'Assembly', 'Auditorium', 999, -1, 1);
+INSERT INTO `careers` (`id`, `name`, `location`, `maxStudents`, `group`, `hidden`) VALUES (998, 'College Visit/Career Shadowing', '-', 999, -1, 1);
 
 # Dump of table homerooms
 # ------------------------------------------------------------
