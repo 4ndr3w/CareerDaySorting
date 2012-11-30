@@ -1,6 +1,16 @@
 <?php
 require_once("../db.php");
 
+if ( array_key_exists("uploadedfile", $_FILES) )
+{
+	$data = @file_get_contents($_FILES['uploadedfile']['tmp_name']);
+	$lines = explode("\n", $data);
+	foreach ( $lines as $line )
+	{
+		$database->addHomeroom($line);
+	}
+}
+
 if ( array_key_exists("action", $_POST) )
 {
 	switch ( $_POST['action'] )
@@ -57,7 +67,14 @@ $homerooms = $database->getHomerooms();
 					<td class="centered"><input type="submit" value="Add"></td>
 				</form>
 			</tr>
-
 		</table>
+		
+		<br>
+		<form enctype="multipart/form-data" action="" method="POST">
+			Import from file: <input name="uploadedfile" type="file" /><br>
+			<input type="submit" value="Import" />
+		</form>
+		<br>
+		File should contain homeroom names separated by newlines.
 	</div>
 </body>
