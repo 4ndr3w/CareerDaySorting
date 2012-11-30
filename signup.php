@@ -233,8 +233,8 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 						<button id="next" type="button" onclick="showForm(1)" value="Next">Next</button>
 					</div>
 					<div id="sect-1" class="sect">
-						<div id="optOutContainer"><input type="radio" id="optOutButton" name="seniorOptOut" value="1" disabled="disabled" onChange="disabledChoicesCheck()" /><label for="optOutButton">I am going to career shadow or attend a college visit.</label><br><br></div>
-						<input type="radio" id="optInButton" name="seniorOptOut" value="0" checked="checked" onChange="disabledChoicesCheck()" /><label for="optInButton">I am going to participate in career day.</label><br>
+						<div id="optOutContainer"><input type="radio" id="optOutButton" name="seniorOptOut" value="1" disabled="disabled" onChange="disabledChoicesCheck()" /><label for="optOutButton">I am going to career shadow or attend a college visit.</label><br><br>
+						<input type="radio" id="optInButton" name="seniorOptOut" value="0" checked="checked" onChange="disabledChoicesCheck()" /><label for="optInButton">I am going to participate in career day.</label><br></div>
 						Choice 1:
 						<select id="f5" onchange="update(5)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
