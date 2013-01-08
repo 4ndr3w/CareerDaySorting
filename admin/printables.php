@@ -48,16 +48,18 @@ if ( $_GET['by'] == "student" )
 	foreach ( $students as $student)
 	{
 		$placements = $database->getStudentPlacement($student['id']);
-
-		echo "<div class=\"datablock ".($cur>($total/2)?"right":"left")."\">";
-		echo "ID: ".$student['id']." - ".$student['first']." ".$student['last']." - HR: ".$student['homeroom']."<br>\n";
-		for ( $i = 1; $i < 4; $i++ )
+		if ( $placements["p1"] != $seniorOptOutID )
 		{
-			$career = $database->getCareer($placements["p".$i]);
-			echo $i." - ".$career['name']." - ".$career['location']."<br>\n";
+			echo "<div class=\"datablock ".($cur>($total/2)?"right":"left")."\">";
+			echo "ID: ".$student['id']." - ".$student['first']." ".$student['last']." - HR: ".$student['homeroom']."<br>\n";
+			for ( $i = 1; $i < 4; $i++ )
+			{
+				$career = $database->getCareer($placements["p".$i]);
+				echo $i." - ".$career['name']." - ".$career['location']."<br>\n";
+			}
+			echo "<br></div>\n";
+			$cur++;
 		}
-		echo "<br></div>\n";
-		$cur++;
 	}
 }
 else if ( $_GET['by'] == "career" )
