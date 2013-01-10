@@ -125,7 +125,15 @@ class Database
 		$result = mysql_query("SELECT * FROM `placements` WHERE `p".$block."` = ".$id);
 		return mysql_num_rows($result);
 	}
-
+	
+	function getNumberOfStudentsSignedUpForCareer($id)
+	{
+		$num = 0;
+		for ( $i = 1; $i <= 4; $i++ )
+			$num += mysql_num_rows(mysql_query("SELECT * FROM `selections` WHERE `s".$i."` = ".$id));
+		return $num;
+	}
+	
 	function setStudentChoices($id, $c1, $c2, $c3, $c4)
 	{
 		if ( ($id = intval($id)) == 0 )

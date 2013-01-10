@@ -73,10 +73,11 @@ else if ( $_GET['by'] == "career" )
 			for ( $i = 0; $i < 3; $i++ )
 			{
 				$students = $database->getStudentsIn($career['id'], $i);
+				$num = count($students);
 				?>
 				<table border="1" class="datablock">
 				<tr>
-					<td colspan="100%" class="title"><?php echo "<strong>".$career['name']." - Block ".($i+1)."</strong><br>\n"; ?></td>
+					<td colspan="100%" class="title"><?php echo "<strong>".$career['name']." - Block ".($i+1)." - ".$num." students</strong><br>\n"; ?></td>
 				</tr>
 			
 				<tr>

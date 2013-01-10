@@ -37,6 +37,7 @@ $careers = array_reverse($careers);
 				
 				<th><span class="columnHeader">Name</span></th>
 				<th><span class="columnHeader">Location</span></th>
+				<th><span class="columnHeader"># Signed Up</span></th>
 				<th><span class="columnHeader">Limit</span></th>
 				<th><span class="columnHeader">Actions</span></th>
 			<tr>
@@ -52,6 +53,7 @@ foreach ( $careers as $career )
 			<input type="hidden" name="id" value="<?php echo $career['id']; ?>">
 			<td><?php echo $career['name']; ?></td>
 			<td><?php echo $career['location']; ?></td>
+			<td><?php echo $database->getNumberOfStudentsSignedUpForCareer($career['id']); ?>
 			<td><?php echo $career['maxStudents']; ?></td>
 			<td><button type="button" onclick="deleteCareer(<?php echo $career['id']; ?>)">Delete</button></td>
 		</form>
