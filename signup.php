@@ -59,7 +59,10 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 
 		function update(num){
 			if ( !choicesAreUnique() )
+			{
 				alert("Every career choice must be different");
+				return;
+			}
 
 			if ( num >= 5 && num <= 8 ) // Career lists
 			{
@@ -75,12 +78,12 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 			for(i=0;i<9;i++){
 				if ( isOptOut && i >= 5 && i <= 8 )
 				{
-					process = process + (100/9);
-					bar = bar + (860/9);
+					process = process + (100/10);
+					bar = bar + (860/10);
 				}
 				else if(document.getElementById("f"+i).value != "" && document.getElementById("f"+i).value != 0){
-					process = process + (100/9);
-					bar = bar + (860/9);
+					process = process + (100/10);
+					bar = bar + (860/10);
 				}
 			}
 			
@@ -89,7 +92,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 				width: bar + "px"},
 				1000,
 				function(){
-					if(bar > 870 && (choicesAreUnique() || document.getElementById("optOutButton").checked) )
+					if(bar >= ((860/10)*9) && (choicesAreUnique() || document.getElementById("optOutButton").checked) )
 						$("#submitarea").slideDown();
 					else
 						$("#submitarea").slideUp();
@@ -135,8 +138,20 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 			}
 		}
 		
-		function submitToServer()
+		function doFinishAnimationAndSubmit()
 		{
+			$("#precent").html("100");
+			$("#InBar").animate({
+				width: "860px"},
+				1000,
+				function()
+				{
+					submitToServer();
+				});
+		}
+		
+		function submitToServer()
+		{			
 			_id = document.getElementById("f0").value;
 			_first = document.getElementById("f1").value;
 			_last = document.getElementById("f2").value;
@@ -193,7 +208,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 						<div id="InBar"></div>
 					</div>
 					<div id="submitarea">
-						Click here to submit: <button id="submit" type="button" onClick="submitToServer()">Submit</button>
+						Click here to submit: <button id="submit" type="button" onClick="doFinishAnimationAndSubmit()">Submit</button>
 					</div>
 				</section>
 				<section id="conformation">
