@@ -130,7 +130,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 				else
 				{
 					careerID = document.getElementById("f"+i).value;
-					document.getElementById("c"+i).innerHTML = (careerID==0 ? "" : careerList[careerID].text);
+					document.getElementById("c"+i).innerHTML = (careerID==0 ? "" : getCareerNameForID(careerID));
 				}
 			}
 		}
