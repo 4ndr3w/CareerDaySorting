@@ -143,7 +143,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 			$("#precent").html("100");
 			$("#InBar").animate({
 				width: "860px"},
-				1000,
+				500,
 				function()
 				{
 					submitToServer();
