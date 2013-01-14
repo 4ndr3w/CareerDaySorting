@@ -319,7 +319,7 @@ function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, &$
 	return $thisStudentSortSuccess;
 }
 
-for ( $i = 0; $i < 4; $i++ )
+for ( $i = 0; $i <= 4; $i++ )
 {
 	foreach ($order as $currentSortingGrade )
 	{
@@ -338,10 +338,13 @@ for ( $i = 0; $i < 4; $i++ )
 				$highestChoiceNumber = $i;
 				if ( $highestChoiceNumber == -1 )
 					$skip = true;
+				
 				if ( !$skip )
 				{
 					$highestChoiceNumber = $student->getHighestChoiceNumber();
-					$highestChoiceID = $student->choices[$highestChoiceNumber];
+					$highestChoiceID -1;
+					if ( array_key_exists($highestChoiceNumber, $careers) )
+						$highestChoiceID = $student->choices[$highestChoiceNumber];
 					if ( $highestChoiceID != -1)
 					{
 						$thisChoice = new Placement($highestChoiceID->id, $highestChoiceNumber);
