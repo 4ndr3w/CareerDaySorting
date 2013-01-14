@@ -66,7 +66,7 @@
 		}
 		
 		function deleteCareer(career){
-			if ( !confirm("Are you sure?\n\nRemoving a career that students have already signed up for will cause automatic sorting to fail.") )
+			if ( !confirm("Are you sure?\n\nRemoving a career that students have already signed up for will cause their choice to be skipped.") )
 				return;
 			var ID = {action:'del', id:career};
 			sendData("careerTable.php",ID, function(data){
