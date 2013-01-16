@@ -342,9 +342,7 @@ for ( $i = 0; $i <= 4; $i++ )
 				if ( !$skip )
 				{
 					$highestChoiceNumber = $student->getHighestChoiceNumber();
-					$highestChoiceID -1;
-					if ( array_key_exists($highestChoiceNumber, $careers) )
-						$highestChoiceID = $student->choices[$highestChoiceNumber];
+					$highestChoiceID = $student->choices[$highestChoiceNumber];
 					if ( $highestChoiceID != -1)
 					{
 						$thisChoice = new Placement($highestChoiceID->id, $highestChoiceNumber);
