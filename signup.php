@@ -142,7 +142,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 		{
 			$("#precent").html("100");
 			$("#InBar").animate({
-				width: "860px"},
+				width: "880px"},
 				500,
 				function()
 				{
@@ -180,10 +180,12 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 					if ( data == "fail" )
 					{
 						alert("Please make sure that all of the information you have entered is valid.\n");
+						update(0);
 					}
 					else if ( data == "dup" )
 					{
 						alert("You have already submitted your career choices.\n\nYou must call the help desk to clear your choices at extention 1776");
+						update(0);
 					}
 					else
 					{
