@@ -14,10 +14,13 @@ table{
 
 tr,td,th{
 	border:1px solid black;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 tr,th{
 	background-color:#FFFFFF;	
+
 }
 
 h5
@@ -53,6 +56,12 @@ h5
 	padding-left:15px;
 	float:left;
 	text-align:center;
+}
+
+#table-Students
+{
+	table-layout: fixed;
+	width:580px;
 }
 
 .centered

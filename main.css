@@ -66,6 +66,7 @@ body{
 	padding:5px;
 	float:left;
 	border-right:2px solid #C8C8C8;
+	overflow-x: hidden;
 }
 
 #formarea{

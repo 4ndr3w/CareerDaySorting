@@ -20,11 +20,11 @@ Printable lists: <a href="printables.php?by=student">by Student</a> - <a href="p
 foreach ( $students as $student )
 {
 	$placements = $database->getStudentPlacement($student['id']);
-	echo "<th colspan='4'>ID: ".$student['id']." ".$student['first']." ".$student['last']." HR: ".$student['homeroom']."</th><tr>";
+	echo "<th colspan='3'>ID: ".$student['id']." ".$student['first']." ".$student['last']." HR: ".$student['homeroom']."</th><tr>";
 	for ( $i = 1; $i < 4; $i++ )
 	{
 		$career = $database->getCareer($placements["p".$i]);
-		echo "<td>".$career['name']." - ".$career['location']."</td>";
+		echo "<td colspan='1'>".$career['name']." - ".$career['location']."</td>";
 	}
 	echo "</tr></tr>";
 ?>
