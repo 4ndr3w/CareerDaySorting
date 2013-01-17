@@ -14,7 +14,14 @@ switch ($_POST['action'])
 
 
 $careers = $database->getCareers(false);
-$careers = array_reverse($careers);
+$careersSortPivot = array();
+
+foreach ( $careers as $k=>$v )
+{
+	$careersSortPivot[$k] = $v['name'];
+}
+
+array_multisort($careersSortPivot, SORT_ASC, $careers);
 ?>
 <h3>Add a Career</h3>
 <form>
