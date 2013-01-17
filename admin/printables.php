@@ -72,6 +72,8 @@ else if ( $_GET['by'] == "career" )
 		{
 			for ( $i = 0; $i < 3; $i++ )
 			{
+				if ( $career['id'] == $seniorOptOutID && $i != 0 )
+					break;
 				$students = $database->getStudentsIn($career['id'], $i);
 				$num = count($students);
 				?>
