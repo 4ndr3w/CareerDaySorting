@@ -141,6 +141,14 @@
 			});
 			$("#genScheduleHandouts-inner").html("Loading...Please wait");
 		}
+		
+		function manualSortSpecificStudent()
+		{
+			var studentid = prompt("Student ID:");
+			if ( studentid == null )
+				return;
+			window.location="resolveBlanks.php?specific="+studentid;
+		}
 		</script>
 	</head>
 	<body onload="init()">
@@ -155,6 +163,7 @@
 				<h5>Manual</h5>
 				Running a manual sort will not overwrite any completed placement data.<br>
 				<form action="resolveBlanks.php" method="get"><input type="submit" value="Run Manual Sort"></form>
+				<button onClick="manualSortSpecificStudent()">Specific Manual Sort</button>
 			</section>
 			<section id="manageCareers">
 				<h2>Manage Careers</h2>

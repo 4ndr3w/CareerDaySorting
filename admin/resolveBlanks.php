@@ -9,7 +9,20 @@ if ( array_key_exists("id", $_POST) )
 		$database->setStudentPlacement($_POST['id'], $_POST['p1'], $_POST['p2'], $_POST['p3']);
 }
 
-$students = $database->getStudents();
+if ( array_key_exists("specific", $_GET) && array_key_exists("id", $_POST) )
+	header("Location: index.html");
+
+
+$students = array();
+if ( array_key_exists("specific", $_GET) )
+{
+	$students = array($database->getStudent($_GET['specific']));
+}
+else
+{	
+	$students = $database->getStudents();
+}
+
 $careers = $database->getCareers();
 $student = array();
 $placements = array();
@@ -35,6 +48,8 @@ foreach ( $students as $_student )
 			}
 		}
 	}
+	if ( array_key_exists("specific", $_GET) )
+		$studentIncomplete = true;
 	if ( $studentIncomplete )
 	{
 		$student = $_student;
@@ -120,7 +135,7 @@ if ( empty($student) )
 					<?php
 					if ( $placements['p'.$thisBlock] == $assemblyID )
 					{ ?>
-						<option selected="selected" id="<?php echo $assemblyID; ?>">Assembly</option>
+						<option selected="selected" value="<?php echo $assemblyID; ?>">Assembly</option>
 					<?php
 					}
 					else
