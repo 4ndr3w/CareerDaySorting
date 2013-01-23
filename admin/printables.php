@@ -28,6 +28,13 @@
 		margin:auto;
 		text-align:center;
 	}
+	
+	#stats
+	{
+		margin:auto;
+		text-align:center;
+		margin-bottom: 40px;
+	}
 	</style>
 </head>
 <body>
@@ -52,11 +59,11 @@ if ( $_GET['by'] == "student" )
 		if ( $placements["p1"] != $seniorOptOutID )
 		{
 			echo "<div class=\"datablock ".($cur>($total/2)?"right":"left")."\">";
-			echo "ID: ".$student['id']." - ".$student['first']." ".$student['last']." - HR: ".$student['homeroom']."<br>\n";
+			echo $student['id']." - ".$student['first']." ".$student['last']." - HR: ".$student['homeroom']."<br>\n";
 			for ( $i = 1; $i < 4; $i++ )
 			{
 				$career = $database->getCareer($placements["p".$i]);
-				echo $i." - ".$career['name']." - ".$career['location']."<br>\n";
+				echo $i." - ".$career['location']." - ".$career['name']."<br>\n";
 			}
 			echo "<br></div>\n";
 			$cur++;
@@ -65,6 +72,14 @@ if ( $_GET['by'] == "student" )
 }
 else if ( $_GET['by'] == "career" )
 {
+	$stats = $database->getStatistics();
+	echo "<div id=\"stats\">Statistics:<br>\n";
+	foreach ( $stats as $stat )
+	{
+		echo $stat['name']." - ".$stat['value']."<br>\n";
+	}
+	echo "</div>";
+		
 	$careers = $database->getCareers();
 	foreach ( $careers as $career)
 	{
