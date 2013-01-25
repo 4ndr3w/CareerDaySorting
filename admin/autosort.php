@@ -72,6 +72,12 @@ class Choice
 		return new Placement($this->id, $this->weight, false);
 	}
 	
+	function exists()
+	{
+		global $careers;
+		return array_key_exists($this->id, $careers);
+	}
+	
 	function isPossible()
 	{
 		return $this->possible;
@@ -121,7 +127,8 @@ class Student
 		$choiceGroups = array();
 		for ($i = 0; $i < 4; $i++ )
 		{
-			$choiceGroups[$this->choices[$i]->getGroup()]++;
+			if ( $this->choices[$i]->exists() )
+				$choiceGroups[$this->choices[$i]->getGroup()]++;
 		}
 		array_flip($choiceGroups);
 		return $choiceGroups;
@@ -156,7 +163,7 @@ class Student
 		foreach ($this->choices as $k=>$choice)
 		{
 			$isThisChoice = true;
-			if ( $choice->isPossible() )
+			if ( $choice->isPossible() && $choice->exists() )
 			{
 				foreach ( $this->placements as $p )
 				{
