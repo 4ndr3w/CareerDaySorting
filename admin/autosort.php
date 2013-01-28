@@ -163,7 +163,7 @@ class Student
 		foreach ($this->choices as $k=>$choice)
 		{
 			$isThisChoice = true;
-			if ( $choice->isPossible() && $choice->exists() )
+			if ( get_class($choice) == "Choice" && $choice->isPossible() && $choice->exists() )
 			{
 				foreach ( $this->placements as $p )
 				{
@@ -311,11 +311,6 @@ function attemptSchedule($scheduledCareers, $newCareerID, $student, $careers, &$
 		}
 		if ( $thisStudentSortSuccess ) break;
 	}
-							
-	if ( !$thisStudentSortSuccess && $isChoice )
-	{
-		$student->choices[$highestChoiceNumber]->possible = false;
-	}
 	
 	foreach ( $student->placements as $k => $placement )
 	{
@@ -371,8 +366,9 @@ for ( $i = 0; $i <= 4; $i++ )
 								break;
 							}
 						}
-	
-						attemptSchedule($scheduledCareers, $highestChoiceID->id, $student, $careers, $itsRan);
+
+						if ( !attemptSchedule($scheduledCareers, $highestChoiceID->id, $student, $careers, $itsRan, true) )
+							$student->choices[$highestChoiceNumber]->possible = false;
 					}
 				}
 			}
