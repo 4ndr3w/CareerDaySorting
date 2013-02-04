@@ -1,48 +1,88 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
     <title>Career Day Sorting by 4ndr3w</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/4ndr3w/CareerDaySorting">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/4ndr3w/CareerDaySorting/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/4ndr3w/CareerDaySorting/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
+    <header>
+      <div class="container">
+        <h1>Career Day Sorting</h1>
+        <h2></h2>
 
-      <section>
-        <div id="title">
-          <h1>Career Day Sorting</h1>
-          <p></p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/4ndr3w">4ndr3w</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
+        <section id="downloads">
+          <a href="https://github.com/4ndr3w/CareerDaySorting/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/4ndr3w/CareerDaySorting/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/4ndr3w/CareerDaySorting" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
 
-        <h3>Career Day Sorting</h3>
+    <div class="container">
+      <section id="main_content">
+        <h3>Introduction</h3>
+
+<p>This application is designed to sort students into career blocks for career day.</p>
+
+<p>Features include:</p>
+
+<ul>
+<li>Admin interface to manage careers and students</li>
+<li>Importing career lists from CSV</li>
+<li>Web-based student signup system</li>
+<li>Automatic and manual sorting</li>
+<li>Automatic sorting is aware of "career groups" and will try to place students in similar careers if none of their prefered choices are available</li>
+</ul><p>Hardcoded parameters:</p>
+
+<ul>
+<li>Each student has 4 choices</li>
+<li>A student's schedule consists of 3 blocks, one of them is an assembly. The assembly's block depends on their grade.</li>
+<li>Seniors are able to opt-out to do career shadowing/college visit</li>
+</ul><h3>Installation</h3>
+
+<p>Prerequisites:</p>
+
+<ul>
+<li>A webserver able to execute PHP files</li>
+<li>PHP with the MySQL extention</li>
+<li>A MySQL Database</li>
+</ul><p>Installation instructions:</p>
+
+<ol>
+<li>Create an empty MySQL database and import the tables from structure.sql</li>
+<li>Put the contents of this folder where your webserver is serving from</li>
+<li>Rename or copy config.php.example to config.php</li>
+<li>Open config.php with your favorite editor and set your MySQL connection information</li>
+<li>Go to the admin page with your web browser and start adding careers</li>
+</ol><h3>Suggested Workflow</h3>
+
+<p>This is the suggested workflow for running CareerDaySorter:</p>
+
+<ol>
+<li>Construct a list of careers in an Excel document, using the format specified in importCareers.php</li>
+<li>Export the career list as a CSV and import it to CareerDaySorter using importCareers.php</li>
+<li>Ensure all data was proporly imported</li>
+<li>Distribute the link to index.php or signup.php to teachers/students</li>
+<li>AFTER all students have signed up, go to the admin page and run an automatic sort</li>
+<li>Manually resolve any students that can't be automaticlly sorted</li>
+<li>Print student schedules and career attendance lists ( or save as PDF )</li>
+</ol><h3>Hidden Careers</h3>
+
+<p>"Careers" such as the class assembly and career shadowing exist as hidden careers inside the database. A hidden career does not appear in the signup list for students.
+If you did not import using the structure file, you will need to manually insert the row for these events and set their ID in config.php</p>
+
+<p>By default, Assembly has an ID of 999 and Career Shadowing/College Visit has an ID of 998.</p>
       </section>
-
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
     
   </body>
 </html>
