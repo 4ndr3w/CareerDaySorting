@@ -16,6 +16,8 @@ Hardcoded parameters:
 * A student's schedule consists of 3 blocks, one of them is an assembly. The assembly's block depends on their grade.
 * Seniors are able to opt-out to do career shadowing/college visit
 
+This software is licensed under the GPL 3.0 License. Read the license.txt file distributed with the software, or visit [http://www.gnu.org/licenses/gpl.html](http://www.gnu.org/licenses/gpl.html) for more info.
+
 ### Installation
 
 Prerequisites:
