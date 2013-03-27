@@ -81,7 +81,7 @@ foreach ( $careers as $career )
 			<td><?php echo $career['location']; ?></td>
 			<td><?php echo $database->getNumberOfStudentsSignedUpForCareer($career['id']); ?>
 			<td><?php echo $career['maxStudents']; ?></td>
-			<td><button type="button" onclick="deleteCareer(<?php echo $career['id']; ?>)">Delete</button></td>
+			<td><button type="button" onClick="window.location='editCareer.php?id=<?php echo $career['id']; ?>'">Edit</button><button type="button" onclick="deleteCareer(<?php echo $career['id']; ?>)">Delete</button></td>
 		</form>
 	</tr>
 <?php

@@ -104,8 +104,22 @@ class Database
 			else if ( !empty($d) )
 				$output[] = $d;
 		}
-		return $output;
+		return $output;	
+	}
+	
+	function setCareerProperties($id, $name, $location, $limit)
+	{
+		$name = mysql_real_escape_string($name);
+		$location = mysql_real_escape_string($location);
 		
+		if ( ($limit = intval($limit)) == 0 )
+			return false;
+		if ( ($id = intval($id)) == 0 )
+			return false;
+		
+		mysql_query("UPDATE `careers` SET `name` = '".$name."' WHERE `id` = ".$id);
+		mysql_query("UPDATE `careers` SET `location` = '".$location."' WHERE `id` = ".$id);
+		mysql_query("UPDATE `careers` SET `maxStudents` = ".$limit." WHERE `id` = ".$id);
 	}
 	
 	function getGroupForCareer($id)
