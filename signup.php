@@ -84,8 +84,14 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 
 			if ( num >= 5 && num <= 8 ) // Career lists
 			{
-				var careerList = document.getElementById("f5").options;
 				document.getElementById("c"+num).innerHTML = getCareerNameForID(document.getElementById("f"+num).value);
+				$(".cf").children()
+					.not("[value='0']")
+					.removeAttr("disabled");
+				for(i=5;i <= 8;i++){
+					$(".cf").children("[value='" + document.getElementById("f"+i).value + "']").not(":selected")
+						.attr("disabled", true);
+				}
 			}
 			else // Normal Fields
 				document.getElementById("c"+num).innerHTML = document.getElementById("f"+num).value;
@@ -271,7 +277,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 						<div id="optOutContainer"><input type="radio" id="optOutButton" name="seniorOptOut" value="1" disabled="disabled" onChange="disabledChoicesCheck()" /><label for="optOutButton">I am going to career shadow or attend a college visit.</label><br><br>
 						<input type="radio" id="optInButton" name="seniorOptOut" value="0" checked="checked" onChange="disabledChoicesCheck()" /><label for="optInButton">I am going to participate in career day.</label><br></div>
 						Choice 1:
-						<select id="f5" onchange="update(5)">
+						<select class="cf" id="f5" onchange="update(5)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<?php 
 							foreach ( $careers as $career )
@@ -281,7 +287,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 							?>
 						</select><br>
 						Choice 2:
-						<select id="f6" onchange="update(6)">
+						<select class="cf" id="f6" onchange="update(6)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<?php 
 							foreach ( $careers as $career )
@@ -291,7 +297,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 							?>
 						</select><br>
 						Choice 3: 
-						<select id="f7" onchange="update(7)">
+						<select class="cf" id="f7" onchange="update(7)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<?php 
 							foreach ( $careers as $career )
@@ -301,7 +307,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 							?>
 						</select><br>
 						Choice 4:
-						<select id="f8" onchange="update(8)">
+						<select class="cf" id="f8" onchange="update(8)">
 							<option value="0" selected="selected" disabled="disabled">-Select One-</option>
 							<?php 
 							foreach ( $careers as $career )
