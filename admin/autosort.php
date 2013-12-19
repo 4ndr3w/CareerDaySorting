@@ -250,9 +250,9 @@ foreach ( $_students as $student )
 		$thisStudent = new Student($student['id'], $student['grade'], $choices['s1'], $choices['s2'], $choices['s3'], $choices['s4']);
 		switch ( $thisStudent->grade )
 		{
-			case 9:
+			/*case 9:
 				$thisStudent->assignBlock(0, new Placement($assemblyID, 100, true));
-				break;
+				break;*/
 			case 10:
 				$thisStudent->assignBlock(1, new Placement($assemblyID, 100, true));
 				break;
