@@ -54,11 +54,9 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 				return false;
 			if(inputNum < 5) {
 				$('#tabs a[href="#student-info"]').tab('show');
-				console.log("smaller than 5");
 			}
 			else {
 				$('#tabs a[href="#student-choice"]').tab('show');
-				console.log("bigger than 5");
 			}
 			$('#f' + inputNum).focus();
 		}
@@ -124,18 +122,14 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 					process = process + (100/10);
 				}
 			}
-			window.console&&console.log(process);
 			$("#precent").html(Math.floor(process));
 			$("#InBar").css("width", process + "%")
 				.delay(500)
 				.queue( function(next){
-					window.console&&console.log(process);
 					if(process >= ((100/10)*9) && (document.getElementById("optOutButton").checked || choicesAreUnique()) ){
-						window.console&&console.log("Submit your answer");
 						$("#submitarea").slideDown();
 					}
 					else{
-						window.console&&console.log("We have work to do");
 						$("#submitarea").slideUp();
 					}
 					next();
@@ -251,15 +245,15 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 					<div class="progress">
 						<div class="progress-bar" id="InBar"></div>
 					</div>
+					Process: <span id="precent">0</span>% complete.
 					<div id="submitarea">
 						<div class="row">
-							<div class="col-xs-12">
-								Click here to submit: <button id="submit" class="btn btn-primary" type="button" onClick="doFinishAnimationAndSubmit()">Submit</button>
+							<div class="col-xs-offset-4 col-xs-4">
+								<p class="text-center">Click here to submit:<br><button id="submit" class="btn btn-primary" type="button" onClick="doFinishAnimationAndSubmit()">Submit</button></p>
 								
 							</div>
 						</div>
 					</div>
-					Process: <span id="precent">0</span>% complete.
 				</section>
 				<br>
 				<div class="row">
@@ -417,7 +411,7 @@ array_multisort($careersSortPivot, SORT_ASC, $careers);
 			</div>
 			<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 				<div class="collapse navbar-collapse">
-					<p class="navbar-text">Algorithm by Andrew Lobos. Design by Ben Thomas</p>
+					<p class="navbar-text">Algorithm by Andrew Lobos. Design by Benjamin Thomas</p>
 				</div>
 			</nav>
 		</div>
