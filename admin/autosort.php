@@ -254,10 +254,10 @@ foreach ( $_students as $student )
 				$thisStudent->assignBlock(0, new Placement($assemblyID, 100, true));
 				break;*/
 			case 10:
-				$thisStudent->assignBlock(1, new Placement($assemblyID, 100, true));
+				$thisStudent->assignBlock(0, new Placement($assemblyID, 100, true));
 				break;
 			case 11:
-				$thisStudent->assignBlock(2, new Placement($assemblyID, 100, true));
+				$thisStudent->assignBlock(1, new Placement($assemblyID, 100, true));
 				break;
 		}
 	}
